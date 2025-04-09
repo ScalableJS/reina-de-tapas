@@ -1,5 +1,11 @@
 import type { CollectionConfig } from 'payload';
-import { slugField } from '@/filds/slug'
+import { slugField } from '@/filds/slug';
+import {
+  MetaTitleField,
+  MetaImageField,
+  MetaDescriptionField,
+  OverviewField,
+} from '@payloadcms/plugin-seo/fields';
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -109,6 +115,54 @@ export const Pages: CollectionConfig = {
         },
       ],
     },
+    {
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Hero',
+          fields: [
+            {
+              name: 'heroContent',
+              type: 'richText',
+              label: 'Hero Content',
+            },
+          ],
+        },
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'content',
+              type: 'richText',
+              label: 'Page Content',
+            },
+          ],
+        },
+        {
+          label: 'SEO',
+          fields: [
+            // Оборачиваем SEO-поля в группу, чтобы избежать конфликта имен
+            {
+              name: 'meta',
+              type: 'group',
+              label: 'SEO',
+              fields: [
+                OverviewField({
+                  titlePath: 'meta.title',
+                  descriptionPath: 'meta.description',
+                  imagePath: 'meta.image',
+                }),
+                MetaTitleField({ hasGenerateFn: true }),
+                MetaImageField({ relationTo: 'media' }),
+                MetaDescriptionField({}),
+              ],
+            },
+          ],
+        },
+      ],
+    },
     slugField(),
   ],
 };
+
+export default Pages;
