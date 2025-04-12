@@ -9,8 +9,6 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React from 'react'
 
-import type { Page } from '@/payload-types'
-
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const pages = await payload.find({
@@ -58,7 +56,7 @@ export default async function Page({ params }: Args) {
   return (
     <article className="pt-16 pb-24">
       <RenderHero {...hero} />
-      {/*<RenderBlocks blocks={layout} />*/}
+      <RenderBlocks blocks={layout} />
     </article>
   )
 }
