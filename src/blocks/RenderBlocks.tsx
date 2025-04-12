@@ -27,9 +27,11 @@ export const RenderBlocks: React.FC<{
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
-  if (hasBlocks) {
+  if (!hasBlocks) return null
+  console.log(blocks)
+
     return (
-      <Fragment>
+      <>
         {blocks.map((block, index) => {
           const { blockName, blockType } = block
 
@@ -46,9 +48,9 @@ export const RenderBlocks: React.FC<{
           }
           return null
         })}
-      </Fragment>
+      </>
     )
-  }
 
-  return null
+
+
 }

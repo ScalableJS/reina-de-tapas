@@ -59,6 +59,7 @@ export const Image: React.FC<MediaProps> = (props) => {
         .map(([, value]) => `(max-width: ${value}px) ${value}px`)
         .join(', ')
 
+  console.log(`Image: ${src} - ${isLoading ? 'loading' : 'loaded'}`)
   return (
     <NextImage
       alt={alt || ''}

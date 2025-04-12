@@ -62,9 +62,10 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Products, Pages, Categories, Media, Orders],
-  // database-adapter-config-start
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
+  db: sqliteAdapter({
+    client: {
+      url: process.env.DATABASE_URI || '',
+    },
   }),
   // database-adapter-config-end
   editor: lexicalEditor({
