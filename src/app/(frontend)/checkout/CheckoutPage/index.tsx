@@ -34,59 +34,61 @@ export const CheckoutPage: React.FC = () => {
 
   const { cart, cartIsEmpty, cartTotal } = useCart()
 
-  useEffect(() => {
-    if (
-      cartTotal.amount &&
-      cartTotal.amount > 0 &&
-      (user || (Boolean(email) && !emailEditable)) &&
-      hasRequestedPaymentIntent.current === false
-    ) {
-      hasRequestedPaymentIntent.current = true
 
-      const makeIntent = async () => {
-        try {
-          const body = !user
-            ? {
-                amount: cartTotal.amount,
-                email,
-              }
-            : {
-                amount: cartTotal.amount,
-              }
-
-          const paymentReq = await fetch(
-            `${process.env.NEXT_PUBLIC_SERVER_URL}/api/create-payment-intent`,
-            {
-              ...(body
-                ? {
-                    body: JSON.stringify(body),
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                  }
-                : {}),
-              credentials: 'include',
-              method: 'POST',
-            },
-          )
-
-          const res = await paymentReq.json()
-
-          if (res.error) {
-            setError(res.error)
-          } else if (res.client_secret) {
-            setError(null)
-
-            setClientSecret(res.client_secret)
-          }
-        } catch (e) {
-          setError('Something went wrong.')
-        }
-      }
-
-      void makeIntent()
-    }
-  }, [cartTotal, user, emailEditable, email])
+  // useEffect(() => {
+  //   if (
+  //     cartTotal.amount &&
+  //     cartTotal.amount > 0 &&
+  //     (user || (Boolean(email) && !emailEditable)) &&
+  //     hasRequestedPaymentIntent.current === false
+  //   ) {
+  //     hasRequestedPaymentIntent.current = true
+  //
+  //     const makeIntent = async () => {
+  //       try {
+  //         const body = !user
+  //           ? {
+  //               amount: cartTotal.amount,
+  //               email,
+  //             }
+  //           : {
+  //               amount: cartTotal.amount,
+  //             }
+  //
+  //         const paymentReq = await fetch(
+  //           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/create-payment-intent`,
+  //           {
+  //             ...(body
+  //               ? {
+  //                   body: JSON.stringify(body),
+  //                   headers: {
+  //                     'Content-Type': 'application/json',
+  //                   },
+  //                 }
+  //               : {}),
+  //             credentials: 'include',
+  //             method: 'POST',
+  //           },
+  //         )
+  //
+  //         const res = await paymentReq.json()
+  //
+  //         console.log('Payment intent response', res)
+  //         if (res.error) {
+  //           setError(res.error)
+  //         } else if (res.client_secret) {
+  //           setError(null)
+  //
+  //           setClientSecret(res.client_secret)
+  //         }
+  //       } catch (e) {
+  //         setError('Something went wrong.')
+  //       }
+  //     }
+  //
+  //     void makeIntent()
+  //   }
+  // }, [cartTotal, user, emailEditable, email])
 
   if (!stripe) return null
 
@@ -95,7 +97,7 @@ export const CheckoutPage: React.FC = () => {
       <div className="basis-full lg:basis-1/2 flex flex-col gap-8 lg:pr-8 pt-8">
         <h2 className="font-medium text-3xl">Contact</h2>
         {!user && (
-          <div className="prose dark:prose-invert bg-black rounded-sm p-4 grow w-full flex items-center">
+          <div className="prose dark:prose-invert dark:bg-black rounded-sm p-4 grow w-full flex items-center">
             <Button asChild className="no-underline text-inherit" variant="outline">
               <Link href="/login">Log in</Link>
             </Button>
@@ -106,7 +108,7 @@ export const CheckoutPage: React.FC = () => {
           </div>
         )}
         {user ? (
-          <div className="bg-black rounded-sm p-4 w-full">
+          <div className="dark:bg-black rounded-sm p-4 w-full">
             <div>
               <p>{user.email}</p>{' '}
               <p>
@@ -115,7 +117,7 @@ export const CheckoutPage: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-black rounded-sm p-4 w-full">
+          <div className="datk:bg-black rounded-sm p-4 w-full">
             <div>
               <p className="mb-4">Enter your email to checkout as a guest.</p>
               <div className="max-w-sm mb-4">
@@ -166,42 +168,7 @@ export const CheckoutPage: React.FC = () => {
             </Button>
           </div>
         )}
-        <Suspense fallback={<React.Fragment />}>
-          {clientSecret && (
-            <Fragment>
-              {error && <p>{`Error: ${error}`}</p>}
-              <Elements
-                options={{
-                  appearance: {
-                    theme: 'stripe',
-                    variables: {
-                      borderRadius: '6px',
-                      colorPrimary: '#858585',
-                      gridColumnSpacing: '20px',
-                      gridRowSpacing: '20px',
-                      colorBackground: theme === 'dark' ? '#0a0a0a' : cssVariables.colors.base0,
-                      colorDanger: cssVariables.colors.error500,
-                      colorDangerText: cssVariables.colors.error500,
-                      colorIcon:
-                        theme === 'dark' ? cssVariables.colors.base0 : cssVariables.colors.base1000,
-                      colorText: theme === 'dark' ? '#858585' : cssVariables.colors.base1000,
-                      colorTextPlaceholder: '#858585',
-                      fontFamily: 'Geist, sans-serif',
-                      fontSizeBase: '16px',
-                      fontWeightBold: '600',
-                      fontWeightNormal: '500',
-                      spacingUnit: '4px',
-                    },
-                  },
-                  clientSecret,
-                }}
-                stripe={stripe}
-              >
-                <CheckoutForm />
-              </Elements>
-            </Fragment>
-          )}
-        </Suspense>
+        <CheckoutForm />
       </div>
 
       {!cartIsEmpty && (
@@ -219,6 +186,8 @@ export const CheckoutPage: React.FC = () => {
               if (!quantity) return null
 
               const image = gallery?.[0] || meta?.image
+
+              console.log(product.price)
 
               return (
                 <div className="flex items-start gap-4" key={index}>

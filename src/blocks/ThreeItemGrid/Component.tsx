@@ -24,7 +24,7 @@ function ThreeItemGridItem({
             position: size === 'full' ? 'center' : 'bottom',
             title: item.title,
           }}
-          media={item.meta?.image as Media}
+          media={item.gallery?.[0] as Media}
         />
       </Link>
     </div>

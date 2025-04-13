@@ -34,29 +34,35 @@ export default async function SearchCategoryPage({
     })
   ).docs?.[0]
 
+
   const products = await payload.find({
     collection: 'products',
     ...(sort ? { sort } : { sort: 'title' }),
     where: {
       and: [
         ...(categoryDoc ? [{ categories: { contains: categoryDoc.id } }] : []),
-        {
-          or: [
+        ...(typeof searchValue === 'string' && searchValue.trim()
+          ? [
             {
-              title: {
-                like: searchValue,
-              },
+              or: [
+                {
+                  title: {
+                    like: searchValue,
+                  },
+                },
+                {
+                  description: {
+                    like: searchValue,
+                  },
+                },
+              ],
             },
-            {
-              description: {
-                like: searchValue,
-              },
-            },
-          ],
-        },
+          ]
+          : []),
       ],
     },
   })
+
   const resultsText = products.docs.length > 1 ? 'results' : 'result'
 
   return (
