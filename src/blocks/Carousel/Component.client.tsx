@@ -39,7 +39,7 @@ export const CarouselClient: React.FC<{ products: Product[] }> = ({ products }) 
             className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3"
             key={`${product.slug}${i}`}
           >
-            <Link className="relative h-full w-full" href={`/product/${product.slug}`}>
+            <Link className="relative h-full w-full" href={`/products/${product.slug}`}>
               <GridTileImage
                 label={{
                   amount: product.price!,

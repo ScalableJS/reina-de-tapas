@@ -36,7 +36,7 @@ export const ItemsList: React.FC<Props> = ({ items }) => {
           }
         }
 
-        const url = `/product/${product?.slug}${isVariant ? `?variant=${item.variant}` : ''}`
+        const url = `/products/${product?.slug}${isVariant ? `?variant=${item.variant}` : ''}`
 
         return (
           <li

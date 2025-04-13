@@ -22,7 +22,7 @@ export function AddToCart({ product, variants }: Props) {
   const selectedVariantId = searchParams.get('variant')
 
   const productUrl = useMemo(() => {
-    const base = `/product/${product.slug}`
+    const base = `/products/${product.slug}`
 
     if (selectedVariantId) {
       const variant = variants?.find((variant) => variant.id === selectedVariantId)
