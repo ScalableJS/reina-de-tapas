@@ -1,4 +1,4 @@
-import type { CollectionConfig, Field } from 'payload'
+import type { CollectionConfig } from 'payload'
 
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import {
@@ -26,9 +26,6 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { slugify } from '@/collections/Products/utilities/slugify'
-import { hooks } from 'prismjs'
-import { beforeValidateProduct } from '@/collections/Products/hooks/beforeValidateProduct'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -193,7 +190,7 @@ export const Products: CollectionConfig = {
                   RowLabel: '@/collections/Products/ui/RowLabels/VariantLabel#VariantLabel',
                   Field: '@/collections/Products/ui/Variants/VariantSelect#VariantSelect',
                 },
-                condition: (data, siblingData) => {
+                condition: (_, siblingData) => {
                   return Boolean(siblingData?.variantOptions?.length)
                 },
                 initCollapsed: true,
