@@ -8,10 +8,9 @@ import React, { Suspense } from 'react'
 import { MobileMenu } from './MobileMenu'
 import type { Header } from 'src/payload-types'
 
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import { LogoIcon } from '@/components/icons/logo'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/utilities/cn'
+import { Logo } from '@/components/Logo/Logo'
 
 type Props = {
   header: Header
@@ -29,10 +28,9 @@ export function HeaderClient({ header }: Props) {
         </Suspense>
       </div>
       <div className="flex w-full items-end justify-between">
-        <div className="flex w-full items-end gap-6 md:w-1/3">
+        <div className="flex w-full items-end gap-6 md:w-1/3 relative">
           <Link className="flex w-full items-center justify-center pt-4 pb-4 md:w-auto" href="/">
-            <LogoIcon className="w-6 h-auto" />
-            {/* <span className="sr-only">{SITE_NAME}</span> */}
+            <Logo className="relative top-24 -mt-24"/>
           </Link>
           {menu.length ? (
             <ul className="hidden gap-4 text-sm md:flex md:items-center">

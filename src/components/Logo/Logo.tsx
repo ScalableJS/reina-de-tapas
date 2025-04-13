@@ -1,12 +1,11 @@
-import React from 'react'
+import Image from 'next/image'
+import logoImage from 'src/assets/images/logo.png'
+import { clsx } from 'clsx'
 
-export const Logo = () => {
+export function Logo({ className }: { className?: string }) {
   return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Payload Logo"
-      className="max-w-[9.375rem] invert dark:invert-0"
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/payload/src/admin/assets/images/payload-logo-light.svg"
-    />
+    <span className={clsx('bg-black/50', className)}>
+      <Image alt="Payload Logo" className="max-w-[9.375rem]" src={logoImage} />
+    </span>
   )
 }

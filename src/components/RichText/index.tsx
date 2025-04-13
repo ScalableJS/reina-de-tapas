@@ -16,6 +16,7 @@ import type {
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/cn'
+import { HTMLAttributes } from 'react'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -40,13 +41,12 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   },
 })
 
-type Props = {
+
+export default function RichText(props: {
   data: SerializedEditorState
   enableGutter?: boolean
   enableProse?: boolean
-} & React.HTMLAttributes<HTMLDivElement>
-
-export default function RichText(props: Props) {
+} & HTMLAttributes<HTMLDivElement>) {
   const { className, enableProse = true, enableGutter = true, ...rest } = props
   return (
     <RichTextWithoutBlocks
