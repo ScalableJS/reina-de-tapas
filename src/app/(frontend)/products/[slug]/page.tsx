@@ -13,44 +13,6 @@ import React, { Suspense } from 'react'
 import { Button } from '@/components/ui/button'
 import { ChevronLeftIcon } from 'lucide-react'
 
-/* export async function generateMetadata({
-  params,
-}: {
-  params: { handle: string }
-}): Promise<Metadata> {
-  const product = await queryProductBySlug(params.handle)
-
-  if (!product) return notFound()
-
-  const { altText: alt, height, url, width } = product.featuredImage || {}
-  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG)
-
-  return {
-    description: product.seo.description || product.description,
-    openGraph: url
-      ? {
-          images: [
-            {
-              alt,
-              height,
-              url,
-              width,
-            },
-          ],
-        }
-      : null,
-    robots: {
-      follow: indexable,
-      googleBot: {
-        follow: indexable,
-        index: indexable,
-      },
-      index: indexable,
-    },
-    title: product.seo.title || product.title,
-  }
-} */
-
 type Args = {
   params: Promise<{
     slug: string
@@ -65,7 +27,7 @@ export default async function ProductPage({ params }: Args) {
 
   const variants = product.enableVariants ? product?.variants : []
 
-  const metaImage = typeof product.meta?.image !== 'string' ? product.meta?.image : undefined
+  const metaImage = typeof product.meta?.image !== 'number' ? product.meta?.image : undefined
   const hasStock = product.enableVariants
     ? variants?.some((variant) => variant?.stock > 0)
     : product.stock! > 0
@@ -98,7 +60,8 @@ export default async function ProductPage({ params }: Args) {
   const relatedProducts =
     product.relatedProducts?.filter((relatedProduct) => typeof relatedProduct !== 'string') ?? []
 
-  const gallery = product.gallery?.filter((image) => typeof image !== 'string')
+  const gallery: Media[] =
+    product.gallery?.filter((image): image is Media => typeof image !== 'number') ?? []
 
   return (
     <React.Fragment>
@@ -122,7 +85,7 @@ export default async function ProductPage({ params }: Args) {
                 <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden" />
               }
             >
-              {gallery?.length && <Gallery images={gallery} />}
+              {gallery.length > 0 && <Gallery images={gallery} />}
             </Suspense>
           </div>
 
@@ -138,9 +101,7 @@ export default async function ProductPage({ params }: Args) {
         <div className="container">
           <RelatedProducts products={relatedProducts as Product[]} />
         </div>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </React.Fragment>
   )
 }
@@ -158,14 +119,16 @@ function RelatedProducts({ products }: { products: Product[] }) {
             key={product.id}
           >
             <Link className="relative h-full w-full" href={`/products/${product.slug}`}>
-              <GridTileImage
-                label={{
-                  amount: product.price!,
-                  currencyCode: 'usd',
-                  title: product.title,
-                }}
-                media={product.meta?.image as Media}
-              />
+              {product.meta?.image && typeof product.meta.image !== 'number' && (
+                <GridTileImage
+                  label={{
+                    amount: product.price!,
+                    currencyCode: 'usd',
+                    title: product.title,
+                  }}
+                  media={product.meta.image}
+                />
+              )}
             </Link>
           </li>
         ))}

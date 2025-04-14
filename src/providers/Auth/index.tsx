@@ -4,18 +4,18 @@ import type { User } from '@/payload-types'
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
-// eslint-disable-next-line no-unused-vars
+/** Context types */
 type ResetPassword = (args: {
   password: string
   passwordConfirm: string
   token: string
 }) => Promise<void>
 
-type ForgotPassword = (args: { email: string }) => Promise<void> // eslint-disable-line no-unused-vars
+type ForgotPassword = (args: { email: string }) => Promise<void>
 
-type Create = (args: { email: string; password: string; passwordConfirm: string }) => Promise<void> // eslint-disable-line no-unused-vars
+type Create = (args: { email: string; password: string; passwordConfirm: string }) => Promise<void>
 
-type Login = (args: { email: string; password: string }) => Promise<User> // eslint-disable-line no-unused-vars
+type Login = (args: { email: string; password: string }) => Promise<User>
 
 type Logout = () => Promise<void>
 
@@ -25,7 +25,7 @@ type AuthContext = {
   login: Login
   logout: Logout
   resetPassword: ResetPassword
-  setUser: (user: User | null) => void // eslint-disable-line no-unused-vars
+  setUser: (user: User | null) => void
   status: 'loggedIn' | 'loggedOut' | undefined
   user?: User | null
 }
@@ -34,165 +34,99 @@ const Context = createContext({} as AuthContext)
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>()
-
-  // used to track the single event of logging in or logging out
-  // useful for `useEffect` hooks that should only run once
   const [status, setStatus] = useState<'loggedIn' | 'loggedOut' | undefined>()
-  const create = useCallback<Create>(async (args) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/create`, {
-        body: JSON.stringify({
-          email: args.email,
-          password: args.password,
-          passwordConfirm: args.passwordConfirm,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
 
-      if (res.ok) {
-        const { data, errors } = await res.json()
-        if (errors) throw new Error(errors[0].message)
-        setUser(data?.loginUser?.user)
-        setStatus('loggedIn')
-      } else {
-        throw new Error('Invalid login')
-      }
-    } catch (e) {
-      throw new Error('An error occurred while attempting to login.')
-    }
+  const create: Create = useCallback(async ({ email, password, passwordConfirm }) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/create`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, passwordConfirm }),
+    })
+
+    const { data, errors } = await res.json()
+    if (!res.ok || errors) throw new Error(errors?.[0]?.message || 'Invalid login')
+
+    setUser(data?.loginUser?.user)
+    setStatus('loggedIn')
   }, [])
 
-  const login = useCallback<Login>(async (args) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/login`, {
-        body: JSON.stringify({
-          email: args.email,
-          password: args.password,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+  const login: Login = useCallback(async ({ email, password }) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/login`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    })
 
-      if (res.ok) {
-        const { errors, user } = await res.json()
-        if (errors) throw new Error(errors[0].message)
-        setUser(user)
-        setStatus('loggedIn')
-        return user
-      }
+    const { errors, user: loggedUser } = await res.json()
+    if (!res.ok || errors) throw new Error(errors?.[0]?.message || 'Invalid login')
 
-      throw new Error('Invalid login')
-    } catch (e) {
-      throw new Error('An error occurred while attempting to login.')
-    }
+    setUser(loggedUser)
+    setStatus('loggedIn')
+    return loggedUser
   }, [])
 
-  const logout = useCallback<Logout>(async () => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/logout`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+  const logout: Logout = useCallback(async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/logout`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+    })
 
-      if (res.ok) {
-        setUser(null)
-        setStatus('loggedOut')
-      } else {
-        throw new Error('An error occurred while attempting to logout.')
-      }
-    } catch (e) {
-      throw new Error('An error occurred while attempting to logout.')
-    }
+    if (!res.ok) throw new Error('An error occurred while attempting to logout.')
+
+    setUser(null)
+    setStatus('loggedOut')
+  }, [])
+
+  const forgotPassword: ForgotPassword = useCallback(async ({ email }) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/forgot-password`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    })
+
+    const { data, errors } = await res.json()
+    if (!res.ok || errors) throw new Error(errors?.[0]?.message || 'Invalid request')
+
+    setUser(data?.loginUser?.user)
+  }, [])
+
+  const resetPassword: ResetPassword = useCallback(async ({ password, passwordConfirm, token }) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/reset-password`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password, passwordConfirm, token }),
+    })
+
+    const { data, errors } = await res.json()
+    if (!res.ok || errors) throw new Error(errors?.[0]?.message || 'Invalid reset')
+
+    setUser(data?.loginUser?.user)
+    setStatus(data?.loginUser?.user ? 'loggedIn' : undefined)
   }, [])
 
   useEffect(() => {
     const fetchMe = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/me`, {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
           method: 'GET',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
         })
 
-        if (res.ok) {
-          const { user: meUser } = await res.json()
-          setUser(meUser || null)
-          setStatus(meUser ? 'loggedIn' : undefined)
-        } else {
-          throw new Error('An error occurred while fetching your account.')
-        }
-      } catch (e) {
+        const { user: meUser } = await res.json()
+        setUser(meUser || null)
+        setStatus(meUser ? 'loggedIn' : undefined)
+      } catch {
         setUser(null)
-        throw new Error('An error occurred while fetching your account.')
       }
     }
 
     void fetchMe()
-  }, [])
-
-  const forgotPassword = useCallback<ForgotPassword>(async (args) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/forgot-password`, {
-        body: JSON.stringify({
-          email: args.email,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-
-      if (res.ok) {
-        const { data, errors } = await res.json()
-        if (errors) throw new Error(errors[0].message)
-        setUser(data?.loginUser?.user)
-      } else {
-        throw new Error('Invalid login')
-      }
-    } catch (e) {
-      throw new Error('An error occurred while attempting to login.')
-    }
-  }, [])
-
-  const resetPassword = useCallback<ResetPassword>(async (args) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/reset-password`, {
-        body: JSON.stringify({
-          password: args.password,
-          passwordConfirm: args.passwordConfirm,
-          token: args.token,
-        }),
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-
-      if (res.ok) {
-        const { data, errors } = await res.json()
-        if (errors) throw new Error(errors[0].message)
-        setUser(data?.loginUser?.user)
-        setStatus(data?.loginUser?.user ? 'loggedIn' : undefined)
-      } else {
-        throw new Error('Invalid login')
-      }
-    } catch (e) {
-      throw new Error('An error occurred while attempting to login.')
-    }
   }, [])
 
   return (
@@ -213,6 +147,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   )
 }
 
-type UseAuth<T = User> = () => AuthContext // eslint-disable-line no-unused-vars
-
-export const useAuth: UseAuth = () => useContext(Context)
+export const useAuth = (): AuthContext => useContext(Context)
