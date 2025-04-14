@@ -1,13 +1,11 @@
 'use client'
 
-import { generateCombinations } from '@/collections/Products/ui/Variants/VariantSelect/buildCombinations'
 import { Button } from '@/components/ui/button'
 import type { Product } from '@/payload-types'
 
 import { createUrl } from '@/utilities/createUrl'
 import clsx from 'clsx'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useMemo } from 'react'
 
 export function VariantSelector({ product }: { product: Product }) {
   const router = useRouter()
@@ -21,15 +19,6 @@ export function VariantSelector({ product }: { product: Product }) {
     return null
   }
 
-  /**
-   * Flattened array of all possible variant combinations.
-   */
-  const combinations = useMemo(() => {
-    if (!variantOptions) return []
-
-    return generateCombinations(variantOptions)
-  }, [variants])
-
   return variantOptions?.map((key) => {
     const options = key.options
 
@@ -37,7 +26,7 @@ export function VariantSelector({ product }: { product: Product }) {
       <dl className="" key={key.slug}>
         <dt className="mb-4 text-sm">{key.label}</dt>
         <dd className="flex flex-wrap gap-3">
-          <React.Fragment>
+          <>
             {options?.map((option) => {
               const optionSlug = option.slug
               const optionKeyLowerCase = key.slug.toLowerCase()
@@ -77,11 +66,9 @@ export function VariantSelector({ product }: { product: Product }) {
               // })
 
               const existingVariant = variants?.find((variant) => {
-                const hasOption = variant.options.every((variantOption) => {
+                return variant.options.every((variantOption) => {
                   return variantOption.value === optionSlug
                 })
-
-                return hasOption
               })
 
               const isAvailableForSale = Boolean(existingVariant?.id && existingVariant?.stock > 0)
@@ -110,7 +97,7 @@ export function VariantSelector({ product }: { product: Product }) {
                 </Button>
               )
             })}
-          </React.Fragment>
+          </>
         </dd>
       </dl>
     )

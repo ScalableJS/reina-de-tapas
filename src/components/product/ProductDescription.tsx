@@ -10,8 +10,8 @@ import { VariantSelector } from './VariantSelector'
 export function ProductDescription({ product }: { product: Product }) {
   let amount = 0,
     lowestAmount = 0,
-    highestAmount = 0,
-    currency = 'usd'
+    highestAmount = 0
+  const currency = 'usd'
 
   const hasVariants = product.enableVariants && product.variants?.length
 
