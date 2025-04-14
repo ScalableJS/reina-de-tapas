@@ -1,4 +1,3 @@
-
 import {
   BoldFeature,
   ItalicFeature,
@@ -22,12 +21,10 @@ import { productsProxy } from '@/endpoints/products'
 import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
 import { plugins } from './plugins'
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
 
 export default buildConfig({
   admin: {
@@ -42,14 +39,7 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Products, Pages, Categories, Media, Orders],
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URL,
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    },
-  }),
+  db: vercelPostgresAdapter(),
   // database-adapter-config-end
   editor: lexicalEditor({
     features: () => {
@@ -61,8 +51,7 @@ export default buildConfig({
           enabledCollections: ['pages'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              return !('name' in field && field.name === 'url');
-
+              return !('name' in field && field.name === 'url')
             })
 
             return [
