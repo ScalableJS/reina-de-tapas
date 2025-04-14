@@ -14,6 +14,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
         </div>
         <div className="flex flex-col gap-8">
           {(links || []).map(({ link }, i) => {
+            // @ts-expect-error: Payload CMS may return numeric reference IDs, but CMSLink expects string | Page | Product
             return <CMSLink key={i} size="lg" {...link} />
           })}
         </div>

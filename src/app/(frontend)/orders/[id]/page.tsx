@@ -106,7 +106,7 @@ export default async function Order({ params, searchParams }: PageProps) {
             <h2 className="font-mono text-primary/50 mb-4 uppercase text-sm">Items</h2>
             <div className="">
               {order.items?.map((item) => {
-                if (typeof item.product === 'string') {
+                if (typeof item.product === 'number') {
                   return null
                 }
 
