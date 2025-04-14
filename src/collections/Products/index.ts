@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, CollectionSlug } from 'payload'
 
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import {
@@ -39,14 +39,16 @@ export const Products: CollectionConfig = {
     defaultColumns: ['title', 'enableVariants', '_status', 'variants.variants'],
     livePreview: {
       url: ({ data }) => {
-        const path = generatePreviewPath({
-          path: `/products/${typeof data?.slug === 'string' ? data.slug : ''}`,
-        })
-        return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
+        const slug = typeof data?.slug === 'string' ? data.slug : ''
+        return `${process.env.NEXT_PUBLIC_SERVER_URL}/products/${slug}`
       },
     },
-    preview: (doc) =>
-      generatePreviewPath({ path: `/products/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
+    preview: ({ slug }) => {
+      return generatePreviewPath({
+        slug: typeof slug === 'string' ? slug : '',
+        collection: 'products'
+      })
+    },
     useAsTitle: 'title',
   },
   defaultPopulate: {
@@ -339,5 +341,3 @@ export const Products: CollectionConfig = {
     maxPerDoc: 1,
   },
 }
-
-
