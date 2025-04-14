@@ -18,10 +18,6 @@ export interface Property {
   [key: string]: Value
 }
 
-export interface Data {
-  [key: string]: Property | Property[]
-}
-
 export type FormBlockType = {
   blockName?: string
   blockType?: 'formBlock'
@@ -29,7 +25,7 @@ export type FormBlockType = {
   form: FormType
   introContent?: SerializedEditorState
 }
-
+type FormValues = Record<string, Property | Property[]>
 export const FormBlock: React.FC<
   {
     id?: string
@@ -42,8 +38,8 @@ export const FormBlock: React.FC<
     introContent,
   } = props
 
-  const formMethods = useForm({
-    defaultValues: buildInitialFormState(formFromProps.fields),
+  const formMethods = useForm<FormValues>({
+    defaultValues: buildInitialFormState(formFromProps.fields) as FormValues,
   })
   const {
     control,
@@ -58,7 +54,7 @@ export const FormBlock: React.FC<
   const router = useRouter()
 
   const onSubmit = useCallback(
-    (data: Data) => {
+    (data: Record<string, Property | Property[]>) => {
       let loadingTimerID: ReturnType<typeof setTimeout>
       const submitForm = async () => {
         setError(undefined)
@@ -68,7 +64,6 @@ export const FormBlock: React.FC<
           value,
         }))
 
-        // delay loading indicator by 1s
         loadingTimerID = setTimeout(() => {
           setIsLoading(true)
         }, 1000)
@@ -86,17 +81,14 @@ export const FormBlock: React.FC<
           })
 
           const res = await req.json()
-
           clearTimeout(loadingTimerID)
 
           if (req.status >= 400) {
             setIsLoading(false)
-
             setError({
               message: res.errors?.[0]?.message || 'Internal Server Error',
               status: res.status,
             })
-
             return
           }
 
@@ -105,17 +97,12 @@ export const FormBlock: React.FC<
 
           if (confirmationType === 'redirect' && redirect) {
             const { url } = redirect
-
-            const redirectUrl = url
-
-            if (redirectUrl) router.push(redirectUrl)
+            if (url) router.push(url)
           }
         } catch (err) {
           console.warn(err)
           setIsLoading(false)
-          setError({
-            message: 'Something went wrong.',
-          })
+          setError({ message: 'Something went wrong.' })
         }
       }
 
@@ -142,7 +129,9 @@ export const FormBlock: React.FC<
                 {formFromProps &&
                   formFromProps.fields &&
                   formFromProps.fields?.map((field, index) => {
-                    const Field: React.FC<any> = fields?.[field.blockType]
+                    // @ts-expect-error: TODO
+                    // @typescript-eslint/no-explicit-any
+                    const Field = fields?.[field.blockType]
                     if (Field) {
                       return (
                         <div className="mb-6 last:mb-0" key={index}>

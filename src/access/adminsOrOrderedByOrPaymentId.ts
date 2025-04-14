@@ -7,7 +7,7 @@ import { checkRole } from '@/access/checkRole'
 /**
  * Access control for Orders based on the user's role and the query string
  */
-export const adminsOrOrderedByOrPaymentId: Access = ({ data, req, req: { user } }) => {
+export const adminsOrOrderedByOrPaymentId: Access = ({ req, req: { user } }) => {
   if (user && checkRole(['admin'], user)) {
     return true
   }
