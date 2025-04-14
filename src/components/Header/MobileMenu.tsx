@@ -70,6 +70,7 @@ export function MobileMenu({ menu }: Props) {
             <ul className="flex w-full flex-col">
               {menu.map((item) => (
                 <li className="py-2" key={item.id}>
+                  {/*@ts-expect-error: Payload CMS may return numeric reference IDs, but CMSLink expects string | Page | Product*/}
                   <CMSLink {...item.link} appearance="link" />
                 </li>
               ))}

@@ -230,6 +230,9 @@ export const VariantOptions: React.FC<ArrayFieldClientProps> = (props) => {
               <DraggableSortableItem disabled={readOnly || !isSortable} id={rowID} key={rowID}>
                 {(draggableSortableItemProps) => (
                   <OptionItem
+                    setCollapse={function (): void {
+                      //   TODO: implement this
+                    }}
                     {...draggableSortableItemProps}
                     addRow={addRow}
                     CustomRowLabel={RowLabels?.[i]}
@@ -244,7 +247,6 @@ export const VariantOptions: React.FC<ArrayFieldClientProps> = (props) => {
                     moveRow={moveRow}
                     parentPath={path}
                     path={rowPath}
-                    // @ts-expect-error
                     permissions={permissions}
                     readOnly={readOnly}
                     removeRow={removeRow}
@@ -252,7 +254,6 @@ export const VariantOptions: React.FC<ArrayFieldClientProps> = (props) => {
                     rowCount={rowsData?.length}
                     rowIndex={i}
                     schemaPath={schemaPath}
-                    // setCollapse={setCollapse}
                   />
                 )}
               </DraggableSortableItem>
@@ -262,7 +263,6 @@ export const VariantOptions: React.FC<ArrayFieldClientProps> = (props) => {
             <React.Fragment>
               {showRequired && (
                 <Banner>
-                  {/* @ts-expect-error */}
                   {t('validation:fieldHasNo', { label: getTranslation(labels.plural, i18n) })}
                 </Banner>
               )}
@@ -271,7 +271,6 @@ export const VariantOptions: React.FC<ArrayFieldClientProps> = (props) => {
                   {t('validation:requiresAtLeast', {
                     count: minRows,
                     label:
-                      // @ts-expect-error
                       getTranslation(minRows > 1 ? labels.plural : labels.singular, i18n) ||
                       t(minRows > 1 ? 'general:rows' : 'general:row'),
                   })}
@@ -293,7 +292,6 @@ export const VariantOptions: React.FC<ArrayFieldClientProps> = (props) => {
             void addRow(value || 0)
           }}
         >
-          {/* @ts-expect-error */}
           {t('fields:addLabel', { label: getTranslation(labels.singular, i18n) })}
         </Button>
       )}

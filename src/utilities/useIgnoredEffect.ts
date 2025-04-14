@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { DependencyList, useEffect, useRef } from 'react'
 
 /**
  * useIgnoredEffect
@@ -9,8 +9,8 @@ import { useEffect, useRef } from 'react'
  */
 export function useIgnoredEffect(
   effect: () => void | (() => void),
-  triggerDeps: never[],
-  ignoredDeps: never[],
+  triggerDeps: DependencyList[],
+  ignoredDeps: unknown[],
 ) {
   const ignoredDepsRef = useRef(ignoredDeps)
 
@@ -19,5 +19,6 @@ export function useIgnoredEffect(
     ignoredDepsRef.current = ignoredDeps
   }, ignoredDeps)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(effect, triggerDeps)
 }

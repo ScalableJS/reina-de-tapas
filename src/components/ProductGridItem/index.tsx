@@ -6,6 +6,8 @@ import clsx from 'clsx'
 import { Media } from '@/components/Media'
 
 import { formatNumberToCurrency } from '@/utilities/formatNumberToCurrency'
+import { util } from 'prismjs'
+import type = util.type
 
 export function ProductGridItem({ product }: { product: Partial<Product> }) {
   const { gallery, price, title } = product
@@ -14,7 +16,7 @@ export function ProductGridItem({ product }: { product: Partial<Product> }) {
 
   return (
     <Link className="relative inline-block h-full w-full group" href={`/products/${product.slug}`}>
-      {image ? (
+      {typeof image === 'object' ? (
         <Media
           className={clsx(
             'relative aspect-square h-full w-full max-h-[23.75rem] object-cover border rounded-2xl p-8 bg-primary-foreground',

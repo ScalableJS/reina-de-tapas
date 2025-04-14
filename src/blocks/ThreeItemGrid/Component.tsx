@@ -20,7 +20,7 @@ function ThreeItemGridItem({
         <GridTileImage
           label={{
             amount: item.price!,
-            currencyCode: item.currency!,
+            currencyCode: "EUR",
             position: size === 'full' ? 'center' : 'bottom',
             title: item.title,
           }}

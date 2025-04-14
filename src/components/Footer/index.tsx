@@ -5,7 +5,6 @@ import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
-import { LogoIcon } from '@/components/icons/logo'
 import { Logo } from '@/components/Logo/Logo'
 
 const { COMPANY_NAME, SITE_NAME } = process.env

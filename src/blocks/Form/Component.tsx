@@ -111,6 +111,7 @@ export const FormBlock: React.FC<
     [router, formID, redirect, confirmationType],
   )
 
+  // @ts-ignore
   return (
     <div className="container lg:max-w-[48rem]">
       {enableIntro && introContent && !hasSubmitted && (
@@ -129,8 +130,6 @@ export const FormBlock: React.FC<
                 {formFromProps &&
                   formFromProps.fields &&
                   formFromProps.fields?.map((field, index) => {
-                    // @ts-expect-error: TODO
-                    // @typescript-eslint/no-explicit-any
                     const Field = fields?.[field.blockType]
                     if (Field) {
                       return (

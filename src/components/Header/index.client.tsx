@@ -36,6 +36,7 @@ export function HeaderClient({ header }: Props) {
             <ul className="hidden gap-4 text-sm md:flex md:items-center">
               {menu.map((item) => (
                 <li key={item.id}>
+                  {/*@ts-expect-error: Payload CMS may return numeric reference IDs, but CMSLink expects string | Page | Product*/}
                   <CMSLink
                     {...item.link}
                     size={'clear'}

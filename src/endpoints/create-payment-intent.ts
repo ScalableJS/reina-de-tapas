@@ -7,7 +7,7 @@ import Stripe from 'stripe'
 import type { CartItems } from '@/payload-types'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2022-08-01',
+  apiVersion: '2025-03-31.basil',
 })
 
 // this endpoint creates an `Invoice` with the items in the cart

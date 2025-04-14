@@ -34,14 +34,15 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {
-        const path = generatePreviewPath({
-          path: `/${typeof data?.slug === 'string' ? data.slug : ''}`,
-        })
-        return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
+        return `${process.env.NEXT_PUBLIC_SERVER_URL}${data.slug}`
       },
     },
-    preview: (doc) =>
-      generatePreviewPath({ path: `/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
+    preview: ({ slug }) => {
+      return generatePreviewPath({
+        slug: typeof slug === 'string' ? slug : '',
+        collection: 'pages'
+      })
+    },
     useAsTitle: 'title',
   },
   fields: [
