@@ -23,6 +23,7 @@ import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
 import { plugins } from './plugins'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -41,9 +42,9 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Products, Pages, Categories, Media, Orders],
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || '',
+  db: postgresAdapter({
+    pool: {
+      connectionString: process.env.POSTGRES_URL,
     },
   }),
   // database-adapter-config-end
