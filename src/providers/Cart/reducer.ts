@@ -78,13 +78,13 @@ export const cartReducer = (cart: CartType, action: CartAction): CartType => {
       // if the item is already in the cart, increase the quantity
       const { payload: incomingItem } = action
       const productId =
-        typeof incomingItem.product === 'string' ? incomingItem.product : incomingItem?.product?.id
+        typeof incomingItem.product === 'number' ? incomingItem.product : incomingItem?.product?.id
 
       const indexInCart = cart?.items?.findIndex(({ product, variant }) => {
         if (incomingItem.variant) {
           return variant === incomingItem.variant
         } else {
-          return typeof product === 'string' ? product === productId : product?.id === productId
+          return typeof product === 'number' ? product === productId : product?.id === productId
         }
       }) // eslint-disable-line function-paren-newline
 

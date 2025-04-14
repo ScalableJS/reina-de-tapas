@@ -3597,9 +3597,3 @@ type DatabaseSchema = {
   relations_header_rels: typeof relations_header_rels
   relations_header: typeof relations_header
 }
-
-declare module '@payloadcms/db-sqlite/types' {
-  export interface GeneratedDatabaseSchema {
-    schema: DatabaseSchema
-  }
-}

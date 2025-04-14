@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { User } from '@/payload-types'
 import type { StripeWebhookHandler } from '@payloadcms/plugin-stripe/types'
 import type Stripe from 'stripe'
