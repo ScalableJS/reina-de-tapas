@@ -1,4 +1,4 @@
-import type { GenerateTitle } from '@payloadcms/plugin-seo/types'
+
 import {
   BoldFeature,
   ItalicFeature,
@@ -27,14 +27,6 @@ import { sqliteAdapter } from '@payloadcms/db-sqlite'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-export type GenerateTitle2<T = unknown> = (args: {
-  doc: T
-  locale?: string
-}) => Promise<string> | string
-
-const generateTitle: GenerateTitle = <Page>({ doc }) => {
-  return `${doc?.title ?? ''} | My Store`
-}
 
 export default buildConfig({
   admin: {
@@ -65,8 +57,8 @@ export default buildConfig({
           enabledCollections: ['pages'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              if ('name' in field && field.name === 'url') return false
-              return true
+              return !('name' in field && field.name === 'url');
+
             })
 
             return [

@@ -9,8 +9,8 @@ import { useEffect, useRef } from 'react'
  */
 export function useIgnoredEffect(
   effect: () => void | (() => void),
-  triggerDeps: any[],
-  ignoredDeps: any[],
+  triggerDeps: never[],
+  ignoredDeps: never[],
 ) {
   const ignoredDepsRef = useRef(ignoredDeps)
 

@@ -25,7 +25,6 @@ export const CreateAccountForm: React.FC = () => {
   const [error, setError] = useState<null | string>(null)
 
   const {
-    formState: { errors },
     handleSubmit,
     register,
     watch,
