@@ -193,7 +193,7 @@ export const CheckoutPage: React.FC = () => {
                 <div className="flex items-start gap-4" key={index}>
                   <div className="flex items-stretch justify-stretch h-20 w-20 p-2 rounded-lg border">
                     <div className="relative w-full h-full">
-                      {image && typeof image !== 'string' && (
+                      {image && typeof image !== 'number' && (
                         <Media className="" fill imgClassName="rounded-lg" resource={image} />
                       )}
                     </div>
