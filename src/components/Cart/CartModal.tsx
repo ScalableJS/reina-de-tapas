@@ -14,7 +14,7 @@ import { ShoppingCart } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { DeleteItemButton } from './DeleteItemButton'
 import { EditItemQuantityButton } from './EditItemQuantityButton'
@@ -24,25 +24,7 @@ import { Button } from '@/components/ui/button'
 export function CartModal() {
   const { cart, cartQuantity, cartTotal } = useCart()
   const [isOpen, setIsOpen] = useState(false)
-  const quantityRef = useRef(
-    cart?.items?.length
-      ? cart.items.reduce((quantity, product) => (product.quantity || 0) + quantity, 0)
-      : 0,
-  )
   const pathname = usePathname()
-
-  // useEffect(() => {
-  //   // Open cart modal when quantity changes.
-  //   if (cartQuantity !== quantityRef.current) {
-  //     // But only if it's not already open (quantity also changes when editing items in cart).
-  //     if (!isOpen && pathname !== '/checkout') {
-  //       setIsOpen(true)
-  //     }
-
-  //     // Always update the quantity reference
-  //     quantityRef.current = cartQuantity
-  //   }
-  // }, [isOpen, cartQuantity, pathname])
 
   useEffect(() => {
     // Close the cart modal when the pathname changes.
@@ -74,18 +56,16 @@ export function CartModal() {
                 {cart?.items?.map((item, i) => {
                   const product = item.product
 
-                  if (typeof product === 'string' || !item || !item.url || !product)
+                  if (typeof product === 'number' || !item || !item.url || !product)
                     return <React.Fragment key={i} />
 
                   const metaImage =
-                    product.meta?.image && typeof product.meta?.image !== 'string'
-                      ? product.meta.image
-                      : undefined
+                    product.meta?.image
 
                   const firstGalleryImage =
                     typeof product.gallery?.[0] !== 'string' ? product.gallery?.[0] : undefined
 
-                  let image = firstGalleryImage || metaImage
+                  const image = firstGalleryImage || metaImage
                   let price = product.price
 
                   const isVariant = Boolean(item.variant)
@@ -93,8 +73,8 @@ export function CartModal() {
                     ? product.variants.find((v) => v.id === item.variant)
                     : undefined
 
-                  if (isVariant) {
-                    price = variant?.price
+                  if (isVariant && variant?.price) {
+                    price = variant.price
                   }
 
                   return (
@@ -105,7 +85,7 @@ export function CartModal() {
                         </div>
                         <Link className="z-30 flex flex-row space-x-4" href={item.url}>
                           <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                            {image?.url && (
+                            {typeof image!=='number' && image?.url && (
                               <Image
                                 alt={image?.alt || product?.title || ''}
                                 className="h-full w-full object-cover"
