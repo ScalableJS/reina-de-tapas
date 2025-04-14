@@ -43,7 +43,7 @@ export const CarouselClient: React.FC<{ products: Product[] }> = ({ products }) 
               <GridTileImage
                 label={{
                   amount: product.price!,
-                  currencyCode: product.currency!,
+                  currencyCode: 'EUR',
                   title: product.title,
                 }}
                 media={product.gallery?.[0] as Media}
