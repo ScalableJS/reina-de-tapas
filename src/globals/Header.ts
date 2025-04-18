@@ -9,6 +9,12 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: 'phone',
+      type: 'text',
+      label: 'Phone number',
+      required: false,
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [

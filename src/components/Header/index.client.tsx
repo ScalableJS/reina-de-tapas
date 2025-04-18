@@ -12,13 +12,11 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/utilities/cn'
 import { Logo } from '@/components/Logo/Logo'
 
-type Props = {
-  header: Header
-}
-
-export function HeaderClient({ header }: Props) {
+export function HeaderClient({ header }: { header: Header }) {
   const menu = header.navItems || []
-  const pathname = usePathname()
+  const pathname = usePathname();
+
+  console.log('header', header)
 
   return (
     <nav className="relative z-20 flex items-end justify-between border-b container pt-2 max-w-[108rem]">
@@ -30,9 +28,9 @@ export function HeaderClient({ header }: Props) {
       <div className="flex w-full items-end justify-between">
         <div className="flex w-full items-end gap-6 md:w-1/3 relative">
           <Link className="flex w-full items-center justify-center pt-4 pb-4 md:w-auto" href="/">
-            <Logo className="relative top-24 -mt-24"/>
+            <Logo className="relative top-24 -mt-24" />
           </Link>
-          {menu.length ? (
+          {menu.length && (
             <ul className="hidden gap-4 text-sm md:flex md:items-center">
               {menu.map((item) => (
                 <li key={item.id}>
@@ -51,10 +49,19 @@ export function HeaderClient({ header }: Props) {
                 </li>
               ))}
             </ul>
-          ) : null}
+          )}
         </div>
 
         <div className="flex justify-end md:w-1/3 gap-4">
+          {header.phone && (
+            <a
+              href={`tel:${header.phone.replace(/[^+\d]/g, '')}`}
+              className="hidden text-sm font-medium hover:text-primary md:block py-4"
+              aria-label={`Call phone number ${header.phone}`}
+            >
+              {header.phone}
+            </a>
+          )}
           <ul className="hidden gap-6 text-sm md:flex md:items-center">
             <li>
               <CMSLink

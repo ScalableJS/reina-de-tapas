@@ -18,7 +18,7 @@ const buttonVariants = cva(
         ghost:
           'text-primary/50 hover:text-primary/100 [&.active]:text-primary/100 py-2 px-4 uppercase font-mono tracking-[0.1em] text-xs',
         link: 'text-primary underline-offset-4 hover:underline',
-        nav: 'text-primary/50 hover:text-primary/100 [&.active]:text-primary/100 p-0 pt-2 pb-6 uppercase font-mono tracking-[0.1em] text-xs',
+        nav: 'text-primary/50 hover:text-primary/100 [&.active]:text-primary/100 px-1 py-4  uppercase font-mono tracking-[0.1em] text-xs',
       },
       size: {
         clear: '',
