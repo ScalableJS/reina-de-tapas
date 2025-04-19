@@ -187,8 +187,6 @@ export const CheckoutPage: React.FC = () => {
 
               const image = gallery?.[0] || meta?.image
 
-              console.log(product.price)
-
               return (
                 <div className="flex items-start gap-4" key={index}>
                   <div className="flex items-stretch justify-stretch h-20 w-20 p-2 rounded-lg border">

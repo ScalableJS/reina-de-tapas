@@ -16,8 +16,6 @@ export function HeaderClient({ header }: { header: Header }) {
   const menu = header.navItems || []
   const pathname = usePathname();
 
-  console.log('header', header)
-
   return (
     <nav className="relative z-20 flex items-end justify-between border-b container pt-2 max-w-[108rem]">
       <div className="block flex-none md:hidden">
@@ -32,22 +30,32 @@ export function HeaderClient({ header }: { header: Header }) {
           </Link>
           {menu.length && (
             <ul className="hidden gap-4 text-sm md:flex md:items-center">
-              {menu.map((item) => (
-                <li key={item.id}>
-                  {/*@ts-expect-error: Payload CMS may return numeric reference IDs, but CMSLink expects string | Page | Product*/}
-                  <CMSLink
-                    {...item.link}
-                    size={'clear'}
-                    className={cn('relative navLink', {
-                      active:
-                        item.link.url && item.link.url !== '/'
-                          ? pathname.includes(item.link.url)
-                          : false,
-                    })}
-                    appearance="nav"
-                  />
-                </li>
-              ))}
+              {menu.map((item) => {
+                const link = item.link;
+                if (typeof link.reference?.value === "number") return;
+
+                let url = link.url;
+
+                if (link.type === 'reference' && link.reference?.relationTo === 'categories') {
+                  url = `/shop/${link.reference?.value?.slug}`;
+                } else if (link.type === 'reference' && link.reference?.relationTo === 'pages') {
+                  url = `/${link.reference?.value?.slug}`;
+                }
+
+                return (
+                  <li key={item.id}>
+                    <CMSLink
+                      {...link}
+                      url={url}
+                      size="clear"
+                      className={cn('relative navLink', {
+                        active: url && url !== '/' ? pathname.includes(url) : false,
+                      })}
+                      appearance="nav"
+                    />
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>

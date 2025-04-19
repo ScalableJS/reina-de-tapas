@@ -56,8 +56,6 @@ export default async function Order({ params, searchParams }: PageProps) {
     notFound()
   }
 
-  console.log({ order })
-
   return (
     <div className="container my-12">
       <div className="flex gap-8 justify-between items-center mb-6">

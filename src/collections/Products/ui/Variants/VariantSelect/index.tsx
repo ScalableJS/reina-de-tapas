@@ -140,8 +140,6 @@ export const VariantSelect: React.FC<TextFieldClientProps> = (props) => {
                 return result
               })
 
-              console.log({ foundinheritedRow: inheritedRow, insertingAt: rowIndex })
-
               dispatchFields({
                 type: 'ADD_ROW',
                 path,

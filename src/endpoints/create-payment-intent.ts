@@ -19,8 +19,6 @@ export const createPaymentIntent: PayloadHandler = async (req) => {
 
   await addDataAndFileToRequest(req)
 
-  console.log({ data: req.data })
-
   const amountFromRequest = req.data?.amount
   const emailFromRequest = req.data?.email
 
