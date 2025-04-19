@@ -14,7 +14,7 @@ import { Logo } from '@/components/Logo/Logo'
 
 export function HeaderClient({ header }: { header: Header }) {
   const menu = header.navItems || []
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav className="relative z-20 flex items-end justify-between border-b container pt-2 max-w-[108rem]">
@@ -31,22 +31,14 @@ export function HeaderClient({ header }: { header: Header }) {
           {menu.length && (
             <ul className="hidden gap-4 text-sm md:flex md:items-center">
               {menu.map((item) => {
-                const link = item.link;
-                if (typeof link.reference?.value === "number") return;
+                const link = item.link
 
-                let url = link.url;
-
-                if (link.type === 'reference' && link.reference?.relationTo === 'categories') {
-                  url = `/shop/${link.reference?.value?.slug}`;
-                } else if (link.type === 'reference' && link.reference?.relationTo === 'pages') {
-                  url = `/${link.reference?.value?.slug}`;
-                }
+                const url = link.url
 
                 return (
                   <li key={item.id}>
                     <CMSLink
-                      {...link}
-                      url={url}
+                      reference={link.reference}
                       size="clear"
                       className={cn('relative navLink', {
                         active: url && url !== '/' ? pathname.includes(url) : false,
@@ -54,7 +46,7 @@ export function HeaderClient({ header }: { header: Header }) {
                       appearance="nav"
                     />
                   </li>
-                );
+                )
               })}
             </ul>
           )}

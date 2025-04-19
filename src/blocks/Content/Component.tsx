@@ -32,7 +32,6 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
                 key={index}
               >
                 {richText && <RichText data={richText} enableGutter={false} />}
-                {/*@ts-expect-error: Payload CMS may return numeric reference IDs, but CMSLink expects string | Page | Product*/}
                 {enableLink && <CMSLink {...link} />}
               </div>
             )

@@ -1,38 +1,37 @@
-import type { Page, Product } from '@/payload-types'
-
+import type { Page, Category } from '@/payload-types'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { cn } from '@/utilities/cn'
 import Link from 'next/link'
-import React from 'react'
+import { ReactNode } from 'react'
 
-type CMSLinkType = {
+
+export function CMSLink({
+  type,
+  appearance = 'inline',
+  children,
+  className,
+  label,
+  newTab,
+  reference,
+  size: sizeFromProps,
+  url,
+}: {
   appearance?: 'inline' | ButtonProps['variant']
-  children?: React.ReactNode
+  children?: ReactNode
   className?: string
   label?: string | null
   newTab?: boolean | null
   reference?: {
-    relationTo: 'pages' | 'posts'
-    value: Page | Product | string
-  } | null
+    relationTo: 'pages'
+    value: Page | number
+  } | {
+    relationTo: 'categories'
+    value: Category | number
+  },
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
   url?: string | null
-}
-
-export const CMSLink: React.FC<CMSLinkType> = (props) => {
-  const {
-    type,
-    appearance = 'inline',
-    children,
-    className,
-    label,
-    newTab,
-    reference,
-    size: sizeFromProps,
-    url,
-  } = props
-
+}) {
   const href =
     type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
       ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${

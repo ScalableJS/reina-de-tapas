@@ -19,78 +19,18 @@ import React, { Fragment, Suspense, useEffect, useRef, useState } from 'react'
 import { cssVariables } from '@/cssVariables'
 import { CheckoutForm } from '../CheckoutForm'
 
-const apiKey = `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
-const stripe = loadStripe(apiKey)
 
 export const CheckoutPage: React.FC = () => {
   const { user } = useAuth()
   const router = useRouter()
   const [error, setError] = useState<null | string>(null)
   const [clientSecret, setClientSecret] = useState()
-  const hasRequestedPaymentIntent = useRef(false)
-  const { theme } = useTheme()
   const [email, setEmail] = useState('')
   const [emailEditable, setEmailEditable] = useState(true)
 
   const { cart, cartIsEmpty, cartTotal } = useCart()
 
 
-  // useEffect(() => {
-  //   if (
-  //     cartTotal.amount &&
-  //     cartTotal.amount > 0 &&
-  //     (user || (Boolean(email) && !emailEditable)) &&
-  //     hasRequestedPaymentIntent.current === false
-  //   ) {
-  //     hasRequestedPaymentIntent.current = true
-  //
-  //     const makeIntent = async () => {
-  //       try {
-  //         const body = !user
-  //           ? {
-  //               amount: cartTotal.amount,
-  //               email,
-  //             }
-  //           : {
-  //               amount: cartTotal.amount,
-  //             }
-  //
-  //         const paymentReq = await fetch(
-  //           `${process.env.NEXT_PUBLIC_SERVER_URL}/api/create-payment-intent`,
-  //           {
-  //             ...(body
-  //               ? {
-  //                   body: JSON.stringify(body),
-  //                   headers: {
-  //                     'Content-Type': 'application/json',
-  //                   },
-  //                 }
-  //               : {}),
-  //             credentials: 'include',
-  //             method: 'POST',
-  //           },
-  //         )
-  //
-  //         const res = await paymentReq.json()
-  //
-  //         console.log('Payment intent response', res)
-  //         if (res.error) {
-  //           setError(res.error)
-  //         } else if (res.client_secret) {
-  //           setError(null)
-  //
-  //           setClientSecret(res.client_secret)
-  //         }
-  //       } catch (e) {
-  //         setError('Something went wrong.')
-  //       }
-  //     }
-  //
-  //     void makeIntent()
-  //   }
-  // }, [cartTotal, user, emailEditable, email])
-
-  if (!stripe) return null
 
   return (
     <div className="flex flex-col items-stretch justify-stretch md:flex-row grow">
