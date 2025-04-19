@@ -6,8 +6,6 @@ import { anyone } from '@/access/anyone'
 import { adminsAndUser } from '@/access/adminsAndUser'
 import { checkRole } from '@/access/checkRole'
 
-import { customerProxy } from './endpoints/customer'
-import { createStripeCustomer } from './hooks/createStripeCustomer'
 import { ensureFirstUserIsAdmin } from './hooks/ensureFirstUserIsAdmin'
 
 export const Users: CollectionConfig = {
@@ -35,7 +33,7 @@ export const Users: CollectionConfig = {
         const email = (user as User).email
         return `
           <!doctype html>
-          <html>
+          <html lang="en">
             <body>
               <h1>Here is my custom email template!</h1>
               <p>Hello, ${email}!</p>
@@ -50,18 +48,6 @@ export const Users: CollectionConfig = {
     },
     tokenExpiration: 1209600,
   },
-  endpoints: [
-    {
-      handler: customerProxy,
-      method: 'get',
-      path: '/:teamID/customer',
-    },
-    {
-      handler: customerProxy,
-      method: 'patch',
-      path: '/:teamID/customer',
-    },
-  ],
   fields: [
     {
       name: 'name',
@@ -182,8 +168,5 @@ export const Users: CollectionConfig = {
       label: 'Skip Sync',
     },
   ],
-  hooks: {
-    beforeChange: [createStripeCustomer],
-  },
   timestamps: true,
 }

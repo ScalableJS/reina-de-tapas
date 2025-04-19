@@ -16,7 +16,6 @@ export function FooterMenu({ menu }: Props) {
         {menu.map((item) => {
           return (
             <li key={item.id}>
-              {/*@ts-expect-error: Payload CMS may return numeric reference IDs, but CMSLink expects string | Page | Product*/}
               <CMSLink appearance="link" {...item.link} />
             </li>
           )

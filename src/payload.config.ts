@@ -17,8 +17,6 @@ import { Orders } from '@/collections/Orders'
 import { Pages } from '@/collections/Pages'
 import { Products } from '@/collections/Products'
 import { Users } from '@/collections/Users'
-import { createPaymentIntent } from '@/endpoints/create-payment-intent'
-import { productsProxy } from '@/endpoints/products'
 import { Footer } from '@/globals/Footer'
 import { Header } from '@/globals/Header'
 import { plugins } from './plugins'
@@ -78,25 +76,6 @@ export default buildConfig({
       ]
     },
   }),
-  //email: nodemailerAdapter(),
-  endpoints: [
-    {
-      handler: productsProxy,
-      method: 'get',
-      path: '/stripe/products',
-    },
-    {
-      handler: createPaymentIntent,
-      method: 'post',
-      path: '/create-payment-intent',
-    },
-    /*
-    {
-      handler: customersProxy,
-      method: 'get',
-      path: '/stripe/customers',
-    }, */
-  ],
   globals: [Footer, Header],
   plugins: [
     ...plugins,
