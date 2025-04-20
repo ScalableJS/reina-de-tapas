@@ -5,14 +5,14 @@ import { ItemsList } from '@/components/ItemsList'
 import { Media } from '@/components/Media'
 import { Price } from '@/components/Price'
 import { Button } from '@/components/ui/button'
-import { formatDateTime } from '@/utilities/formatDateTime'
-import { getMeUser } from '@/utilities/getMeUser'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { formatDateTime } from '@/utils/formatDateTime'
+import { getMeUser } from '@/utils/getMeUser'
+import { mergeOpenGraph } from '@/utils/mergeOpenGraph'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React, { Fragment } from 'react'
 import { ChevronLeftIcon } from 'lucide-react'
-import { formatNumberToCurrency } from '@/utilities/formatNumberToCurrency'
+import { formatNumberToCurrency } from '@/utils/formatNumberToCurrency'
 import { ProductItem } from '@/components/ProductItem'
 
 type PageProps = {
@@ -30,23 +30,19 @@ export default async function Order({ params, searchParams }: PageProps) {
 
   try {
     order = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}?where=[stripePaymentIntentID][equals]=${paymentId}&depth=2`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}?depth=2`,
       {
         headers: {
-          ...(token
-            ? {
-                Authorization: `JWT ${token}`,
-              }
-            : {}),
+          ...(token ? { Authorization: `JWT ${token}` } : {}),
           'Content-Type': 'application/json',
         },
+        cache: 'no-store',          // гарантируем актуальные данные
       },
-    )?.then(async (res) => {
+    ).then(async (res) => {
       if (!res.ok) notFound()
       const json = await res.json()
-      if ('error' in json && json.error) notFound()
-      if ('errors' in json && json.errors) notFound()
-      return json
+      if (json?.error || json?.errors) notFound()
+      return json as Order
     })
   } catch (error) {
     console.error(error)

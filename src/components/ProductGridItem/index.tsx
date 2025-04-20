@@ -5,7 +5,7 @@ import React from 'react'
 import clsx from 'clsx'
 import { Media } from '@/components/Media'
 
-import { formatNumberToCurrency } from '@/utilities/formatNumberToCurrency'
+import { formatNumberToCurrency } from '@/utils/formatNumberToCurrency'
 import { util } from 'prismjs'
 import type = util.type
 

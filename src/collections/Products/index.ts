@@ -1,6 +1,6 @@
 import type { CollectionConfig, CollectionSlug } from 'payload'
 
-import { generatePreviewPath } from '@/utilities/generatePreviewPath'
+import { generatePreviewPath } from '@/utils/generatePreviewPath'
 import {
   FixedToolbarFeature,
   HeadingFeature,

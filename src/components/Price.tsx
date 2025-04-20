@@ -1,4 +1,4 @@
-import { formatNumberToCurrency } from '@/utilities/formatNumberToCurrency'
+import { formatNumberToCurrency } from '@/utils/formatNumberToCurrency'
 import React from 'react'
 
 type BaseProps = {

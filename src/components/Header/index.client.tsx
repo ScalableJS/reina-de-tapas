@@ -9,7 +9,7 @@ import { MobileMenu } from './MobileMenu'
 import type { Header } from 'src/payload-types'
 
 import { usePathname } from 'next/navigation'
-import { cn } from '@/utilities/cn'
+import { cn } from '@/utils/cn'
 import { Logo } from '@/components/Logo/Logo'
 
 export function HeaderClient({ header }: { header: Header }) {

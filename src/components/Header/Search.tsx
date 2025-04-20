@@ -1,6 +1,6 @@
 'use client'
 
-import { createUrl } from '@/utilities/createUrl'
+import { createUrl } from '@/utils/createUrl'
 import { SearchIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'

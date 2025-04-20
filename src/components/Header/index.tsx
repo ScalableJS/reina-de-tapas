@@ -1,4 +1,4 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getCachedGlobal } from '@/utils/getGlobals'
 
 import './index.css'
 import { HeaderClient } from './index.client'

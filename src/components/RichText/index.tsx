@@ -15,7 +15,7 @@ import type {
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
-import { cn } from '@/utilities/cn'
+import { cn } from '@/utils/cn'
 import { HTMLAttributes } from 'react'
 
 type NodeTypes =

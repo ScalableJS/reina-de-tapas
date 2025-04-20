@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 import { RenderParams } from '@/components/RenderParams'
-import { getMeUser } from '@/utilities/getMeUser'
+import { getMeUser } from '@/utils/getMeUser'
 import Link from 'next/link'
 import React from 'react'
 

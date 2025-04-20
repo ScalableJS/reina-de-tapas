@@ -127,10 +127,12 @@ export interface Config {
   globals: {
     footer: Footer;
     header: Header;
+    notificationSettings: NotificationSetting;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
+    notificationSettings: NotificationSettingsSelect<false> | NotificationSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -195,7 +197,6 @@ export interface User {
 export interface Order {
   id: number;
   orderedBy?: (number | null) | User;
-  stripePaymentIntentID?: string | null;
   total: number;
   currency: string;
   items?:
@@ -1304,7 +1305,6 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface OrdersSelect<T extends boolean = true> {
   orderedBy?: T;
-  stripePaymentIntentID?: T;
   total?: T;
   currency?: T;
   items?:
@@ -1603,6 +1603,29 @@ export interface Header {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notificationSettings".
+ */
+export interface NotificationSetting {
+  id: number;
+  email?: {
+    enabled?: boolean | null;
+    from?: string | null;
+    to?: string | null;
+    smtpHost?: string | null;
+    smtpPort?: number | null;
+    smtpUser?: string | null;
+    smtpPass?: string | null;
+  };
+  telegram?: {
+    enabled?: boolean | null;
+    botToken?: string | null;
+    chatId?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
@@ -1643,6 +1666,33 @@ export interface HeaderSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notificationSettings_select".
+ */
+export interface NotificationSettingsSelect<T extends boolean = true> {
+  email?:
+    | T
+    | {
+        enabled?: T;
+        from?: T;
+        to?: T;
+        smtpHost?: T;
+        smtpPort?: T;
+        smtpUser?: T;
+        smtpPass?: T;
+      };
+  telegram?:
+    | T
+    | {
+        enabled?: T;
+        botToken?: T;
+        chatId?: T;
       };
   updatedAt?: T;
   createdAt?: T;

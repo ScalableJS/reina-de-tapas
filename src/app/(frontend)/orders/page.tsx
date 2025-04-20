@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 
 import { RenderParams } from '@/components/RenderParams'
 
-import { getMeUser } from '@/utilities/getMeUser'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { getMeUser } from '@/utils/getMeUser'
+import { mergeOpenGraph } from '@/utils/mergeOpenGraph'
 
 import { notFound } from 'next/navigation'
 import React from 'react'

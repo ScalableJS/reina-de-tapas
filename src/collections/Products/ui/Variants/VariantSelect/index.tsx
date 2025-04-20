@@ -18,7 +18,7 @@ import {
   generateCombinations,
   mergeVariants,
 } from '@/collections/Products/ui/Variants/VariantSelect/buildCombinations'
-import { useIgnoredEffect } from '@/utilities/useIgnoredEffect'
+import { useIgnoredEffect } from '@/utils/useIgnoredEffect'
 
 export const VariantSelect: React.FC<TextFieldClientProps> = (props) => {
   const {

@@ -5,7 +5,7 @@ import { adminsOrLoggedIn } from '@/access/adminsOrLoggedIn'
 import { adminsOrOrderedByOrPaymentId } from '@/access/adminsOrOrderedByOrPaymentId'
 import { clearUserCart } from './hooks/clearUserCart'
 import { populateOrderedBy } from './hooks/populateOrderedBy'
-import { LinkToPaymentIntent } from './ui/LinkToPaymentIntent'
+import { sendNotification } from '@/collections/Orders/hooks/sendNotification'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -28,17 +28,6 @@ export const Orders: CollectionConfig = {
         beforeChange: [populateOrderedBy],
       },
       relationTo: 'users',
-    },
-    {
-      name: 'stripePaymentIntentID',
-      type: 'text',
-      admin: {
-        /* components: {
-          Field: LinkToPaymentIntent,
-        }, */
-        position: 'sidebar',
-      },
-      label: 'Stripe Payment Intent ID',
     },
     {
       type: 'row',
@@ -101,6 +90,6 @@ export const Orders: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [clearUserCart],
+    afterChange: [sendNotification, clearUserCart],
   },
 }

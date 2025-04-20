@@ -1,4 +1,4 @@
-import { cn } from '@/utilities/cn'
+import { cn } from '@/utils/cn'
 import React from 'react'
 
 import type { Product } from '@/payload-types'

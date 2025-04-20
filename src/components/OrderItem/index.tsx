@@ -1,8 +1,8 @@
 import { OrderStatus } from '@/components/OrderStatus'
 import { Button } from '@/components/ui/button'
 import { Order } from '@/payload-types'
-import { formatDateTime } from '@/utilities/formatDateTime'
-import { formatNumberToCurrency } from '@/utilities/formatNumberToCurrency'
+import { formatDateTime } from '@/utils/formatDateTime'
+import { formatNumberToCurrency } from '@/utils/formatNumberToCurrency'
 import Link from 'next/link'
 
 type Props = {

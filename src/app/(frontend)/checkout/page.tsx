@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { mergeOpenGraph } from '@/utils/mergeOpenGraph'
 
 import { CheckoutPage } from './CheckoutPage'
 

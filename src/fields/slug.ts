@@ -1,7 +1,7 @@
 import type { Field } from 'payload'
 
-import { deepMerge } from '@/utilities/deepMerge'
-import { formatSlug } from '@/utilities/formatSlug'
+import { deepMerge } from '@/utils/deepMerge'
+import { formatSlug } from '@/utils/formatSlug'
 
 type Slug = (fieldToUse?: string, overrides?: Partial<Field>) => Field
 
