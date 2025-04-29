@@ -1607,20 +1607,30 @@ export interface Header {
  */
 export interface NotificationSetting {
   id: number;
-  email?: {
-    enabled?: boolean | null;
-    from?: string | null;
-    to?: string | null;
-    smtpHost?: string | null;
-    smtpPort?: number | null;
-    smtpUser?: string | null;
-    smtpPass?: string | null;
-  };
-  telegram?: {
-    enabled?: boolean | null;
-    botToken?: string | null;
-    chatId?: string | null;
-  };
+  channels?:
+    | (
+        | {
+            enabled?: boolean | null;
+            from: string;
+            to: string;
+            smtpHost: string;
+            smtpPort: number;
+            smtpUser: string;
+            smtpPass: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'email';
+          }
+        | {
+            enabled?: boolean | null;
+            botToken: string;
+            chatId: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'telegram';
+          }
+      )[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1676,23 +1686,31 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "notificationSettings_select".
  */
 export interface NotificationSettingsSelect<T extends boolean = true> {
-  email?:
+  channels?:
     | T
     | {
-        enabled?: T;
-        from?: T;
-        to?: T;
-        smtpHost?: T;
-        smtpPort?: T;
-        smtpUser?: T;
-        smtpPass?: T;
-      };
-  telegram?:
-    | T
-    | {
-        enabled?: T;
-        botToken?: T;
-        chatId?: T;
+        email?:
+          | T
+          | {
+              enabled?: T;
+              from?: T;
+              to?: T;
+              smtpHost?: T;
+              smtpPort?: T;
+              smtpUser?: T;
+              smtpPass?: T;
+              id?: T;
+              blockName?: T;
+            };
+        telegram?:
+          | T
+          | {
+              enabled?: T;
+              botToken?: T;
+              chatId?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

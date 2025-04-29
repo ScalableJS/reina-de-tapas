@@ -77,6 +77,14 @@ export default buildConfig({
       ]
     },
   }),
+  endpoints: [{
+    handler: async  (req)=>{
+      console.log(req.body)
+      return Response.json({data: 'Hello World!'}, {status: 200})
+    },
+    method: 'post',
+    path: '/order-checkout',
+  },],
   globals: [Footer, Header, NotificationSettings],
   plugins: [
     ...plugins,

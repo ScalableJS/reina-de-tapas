@@ -1,5 +1,6 @@
 import type { CollectionAfterChangeHook } from 'payload'
-import { sendEmail, sendTelegram } from '@/utils/messenger'
+import { sendTelegram } from '@/utils/messenger'
+import { NotificationSetting } from '@/payload-types'
 
 export const sendNotification: CollectionAfterChangeHook = async ({ doc, operation, req }) => {
   if (operation !== 'create') return
@@ -8,23 +9,21 @@ export const sendNotification: CollectionAfterChangeHook = async ({ doc, operati
     slug: 'notificationSettings',
   })
 
-  // Email
-  if (settings.email.enabled) {
-
-    // await sendEmail({
-    //   order: doc,
-    //   config: {
-    //     email: settings.email ?? "",
-    //
-    //   },
-    // })
-  }
-
-  // Telegram
-  if (settings.telegram.enabled) {
-    // await sendTelegram({
-    //   order: doc,
-    //   config: settings.telegram,
-    // })
+  const telegramSettings = settings.channels.find(isTelegramTypeGuard)
+  if (telegramSettings) {
+    await sendTelegram({
+      order: doc,
+      config: {
+        botToken: telegramSettings.botToken,
+        chatId: telegramSettings.chatId,
+      },
+    })
   }
 }
+
+type ChannelType          = NonNullable<NotificationSetting['channels']>[number]
+type TelegramChannelType  = Extract<ChannelType, { blockType: 'telegram' }>
+
+const isTelegramTypeGuard = (
+  channel?: ChannelType,
+): channel is TelegramChannelType => !!channel && channel.blockType === 'telegram'

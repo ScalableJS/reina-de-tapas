@@ -18,6 +18,31 @@ export function CheckoutPage() {
 
   const allFilled = name && email && phone
 
+  const handleCheckout = async () => {
+    setLocked(true)
+     await fetch('/order-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, phone }),
+    })
+
+    // startTransition(async () => {
+    //   const res = await fetch('/api/checkout', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ ...contact, cart }),
+    //   })
+    //   if (!res.ok) {
+    //     setError('Could not place order. Try again.')
+    //     setLocked(false)
+    //     return
+    //   }
+    //   const { id } = await res.json()
+    //   clearCart()
+    //   router.push(`/orders/${id}`)
+    // })
+  }
+
   return (
     <div className="flex grow flex-col items-stretch justify-stretch md:flex-row">
       <div className="flex basis-full flex-col gap-8 pt-8 lg:basis-1/2 lg:pr-8">
@@ -57,7 +82,7 @@ export function CheckoutPage() {
               variant="default"
               size="lg"
               disabled={!allFilled}
-              onClick={() => setLocked(true)}
+              onClick={() => handleCheckout()}
             >
               Checkout
             </Button>
