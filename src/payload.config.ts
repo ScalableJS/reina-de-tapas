@@ -22,6 +22,7 @@ import { Header } from '@/globals/Header'
 import { plugins } from './plugins'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { NotificationSettings } from '@/globals/NotificationSettings'
+import { createGuestOrder } from '@/endpoints/create-order'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,8 +57,7 @@ export default buildConfig({
           enabledCollections: ['pages'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              return !('name' in field && field.name === 'url');
-
+              return !('name' in field && field.name === 'url')
             })
 
             return [
@@ -77,14 +77,13 @@ export default buildConfig({
       ]
     },
   }),
-  endpoints: [{
-    handler: async  (req)=>{
-      console.log(req.body)
-      return Response.json({data: 'Hello World!'}, {status: 200})
+  endpoints: [
+    {
+      handler: createGuestOrder,
+      method: 'post',
+      path: '/order-checkout',
     },
-    method: 'post',
-    path: '/order-checkout',
-  },],
+  ],
   globals: [Footer, Header, NotificationSettings],
   plugins: [
     ...plugins,

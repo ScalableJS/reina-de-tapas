@@ -20,10 +20,10 @@ export function CheckoutPage() {
 
   const handleCheckout = async () => {
     setLocked(true)
-     await fetch('/order-checkout', {
+     await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/order-checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, phone }),
+      body: JSON.stringify({ name, email, phone, ...cart, total: cartTotal.amount, currency: 'EUR' }),
     })
 
     // startTransition(async () => {

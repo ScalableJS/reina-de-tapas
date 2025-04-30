@@ -1,4 +1,6 @@
-type EmailConfig = {
+
+
+interface EmailConfig {
   from: string
   to: string
   smtpHost: string
@@ -14,12 +16,35 @@ export const sendEmail = async ({ order, config }: { order: any; config: EmailCo
 type TelegramConfig = { botToken: string; chatId: string }
 
 export const sendTelegram = async ({ order, config }: { order: any; config: TelegramConfig }) => {
+  const { name, phone, email } = order.orderedBy;
+  const body = [
+    `🛍️ <b>New Order #${order.id}</b>`,
+    '',
+    `👤 <b>Customer:</b>`,
+    `• Name: ${esc(name)}`,
+    `• Phone: ${esc(phone)}`,
+    `• Email: ${esc(email)}`,
+    '',
+    order.items
+      .map(
+        ({ quantity, product }) =>
+          `• <b>${quantity} × ${esc(product.title)}</b> — ${product.price} ${order.currency}`,
+      )
+      .join('\n'),
+    '',
+    `💰 <b>Total: ${order.total.toFixed(2)} ${order.currency}</b>`,
+  ].join('\n')
+
   await fetch(`https://api.telegram.org/bot${config.botToken}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       chat_id: config.chatId,
-      text: `New order #${order.id} total ${order.total}`,
+      text: body,
+      parse_mode: 'HTML',
     }),
   })
 }
+
+const esc = (s: string) =>
+  s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!)

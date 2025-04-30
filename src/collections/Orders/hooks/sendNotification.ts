@@ -21,9 +21,8 @@ export const sendNotification: CollectionAfterChangeHook = async ({ doc, operati
   }
 }
 
-type ChannelType          = NonNullable<NotificationSetting['channels']>[number]
-type TelegramChannelType  = Extract<ChannelType, { blockType: 'telegram' }>
+type ChannelType = NonNullable<NotificationSetting['channels']>[number]
+type TelegramChannelType = Extract<ChannelType, { blockType: 'telegram' }>
 
-const isTelegramTypeGuard = (
-  channel?: ChannelType,
-): channel is TelegramChannelType => !!channel && channel.blockType === 'telegram'
+const isTelegramTypeGuard = (channel?: ChannelType): channel is TelegramChannelType =>
+  !!channel && channel.blockType === 'telegram'

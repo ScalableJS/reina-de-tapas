@@ -47,11 +47,19 @@ export const Users: CollectionConfig = {
       },
     },
     tokenExpiration: 1209600,
+    maxLoginAttempts: 0,
+    lockTime: 0,
   },
   fields: [
     {
       name: 'name',
       type: 'text',
+    },
+    {
+      name: 'phone',
+      type: 'text',
+      required: false,
+      label: 'Phone',
     },
     {
       name: 'roles',
