@@ -46,5 +46,8 @@ export const sendTelegram = async ({ order, config }: { order: any; config: Tele
   })
 }
 
-const esc = (s: string) =>
-  s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!)
+const esc = (s: string) => {
+  console.log(1, s)
+  return  s?.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!)
+}
+
