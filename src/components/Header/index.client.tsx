@@ -19,16 +19,16 @@ export function HeaderClient({ header }: { header: Header }) {
     return null
   }
   return (
-    <nav className="relative z-20 flex items-end justify-between border-b container pt-2 max-w-[108rem]">
+    <nav className="relative z-20 flex items-end justify-between border-b container bg-white dark:bg-black">
       <div className="block flex-none md:hidden">
         <Suspense fallback={null}>
           <MobileMenu menu={menu} />
         </Suspense>
       </div>
-      <div className="flex w-full items-end justify-between">
-        <div className="flex w-full items-end gap-6 md:w-1/3 relative">
-          <Link className="flex w-full items-center justify-center pt-4 pb-4 md:w-auto" href="/">
-            <Logo className="relative top-24 -mt-24" />
+      <div className="flex w-full justify-between">
+        <div className="flex w-full gap-6 md:w-1/3 relative">
+          <Link className="" href="/">
+            <Logo className="" />
           </Link>
           {menu.length && (
             <ul className="hidden gap-4 text-sm md:flex md:items-center">
@@ -54,7 +54,7 @@ export function HeaderClient({ header }: { header: Header }) {
           )}
         </div>
 
-        <div className="flex justify-end md:w-1/3 gap-4">
+        <div className="flex items-center  md:w-1/3 gap-4">
           {header.phone && (
             <a
               href={`tel:${header.phone.replace(/[^+\d]/g, '')}`}

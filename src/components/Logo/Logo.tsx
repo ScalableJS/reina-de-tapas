@@ -4,8 +4,8 @@ import { clsx } from 'clsx'
 
 export function Logo({ className }: { className?: string }) {
   return (
-    <span className={clsx('bg-black/50', className)}>
-      <Image alt="Payload Logo" className="max-w-[9.375rem]" src={logoImage} />
+    <span className={clsx('', className)}>
+      <Image alt="Payload Logo" className="max-w-28" src={logoImage} />
     </span>
   )
 }

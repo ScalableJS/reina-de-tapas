@@ -17,10 +17,10 @@ export async function Footer() {
   return (
     <footer className="text-sm text-neutral-500 dark:text-neutral-400">
       <div className="container">
-        <div className="flex w-full flex-col gap-6 border-t border-neutral-200 py-12 text-sm md:flex-row md:gap-12 dark:border-neutral-700">
+        <div className="flex w-full flex-col gap-6 border-t border-neutral-200 py-4 text-sm md:flex-row md:gap-12 dark:border-neutral-700">
           <div>
             <Link className="flex items-center gap-2 text-black md:pt-1 dark:text-white" href="/">
-              <Logo className="w-6" />
+              <Logo />
             </Link>
           </div>
           <Suspense
