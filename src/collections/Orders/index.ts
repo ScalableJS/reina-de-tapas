@@ -30,6 +30,21 @@ export const Orders: CollectionConfig = {
       relationTo: 'users',
     },
     {
+      name: 'orderUuid',
+      type: 'text',
+      unique: true,
+      admin: { readOnly: true },
+      hooks: {
+        beforeChange: [
+          ({ operation }) => {
+            if (operation === 'create') {
+              return crypto.randomUUID();
+            }
+          },
+        ],
+      },
+    },
+    {
       type: 'row',
       fields: [
         {

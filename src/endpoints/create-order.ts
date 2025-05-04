@@ -49,7 +49,8 @@ export const createGuestOrder: PayloadHandler = async (req) => {
       req,
     })
 
-    return Response.json({ success: true, orderId: order.id }, { status: 200 })
+    console.log('order', order)
+    return Response.json({ success: true, orderId: order.orderUuid }, { status: 200 })
   } catch (error) {
     payload.logger.error(error.message)
     return Response.json({ error: error.message }, { status: 500 })

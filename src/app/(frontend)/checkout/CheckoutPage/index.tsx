@@ -43,7 +43,8 @@ export function CheckoutPage() {
       const { orderId } = await response.json()
 
       clearCart()
-      router.push(`/orders/${orderId}`)
+      // TODO: Thank you message or page
+      // router.push(`/orders/${orderId}`)
     } catch (err) {
       console.error(err)
     } finally {
