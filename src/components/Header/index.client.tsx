@@ -18,7 +18,7 @@ export function HeaderClient({ header }: { header: Header }) {
   if (pathname === '/search' || pathname === '/checkout') {
     return null
   }
-    return (
+  return (
     <nav className="relative z-20 flex items-end justify-between border-b container pt-2 max-w-[108rem]">
       <div className="block flex-none md:hidden">
         <Suspense fallback={null}>

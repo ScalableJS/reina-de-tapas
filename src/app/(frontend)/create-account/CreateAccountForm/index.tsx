@@ -24,11 +24,7 @@ export const CreateAccountForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<null | string>(null)
 
-  const {
-    handleSubmit,
-    register,
-    watch,
-  } = useForm<FormData>()
+  const { handleSubmit, register, watch } = useForm<FormData>()
 
   const password = useRef({})
   password.current = watch('password', '')

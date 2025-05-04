@@ -59,8 +59,7 @@ export function CartModal() {
                   if (typeof product === 'number' || !item || !item.url || !product)
                     return <React.Fragment key={i} />
 
-                  const metaImage =
-                    product.meta?.image
+                  const metaImage = product.meta?.image
 
                   const firstGalleryImage =
                     typeof product.gallery?.[0] !== 'string' ? product.gallery?.[0] : undefined
@@ -85,7 +84,7 @@ export function CartModal() {
                         </div>
                         <Link className="z-30 flex flex-row space-x-4" href={item.url}>
                           <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
-                            {typeof image!=='number' && image?.url && (
+                            {typeof image !== 'number' && image?.url && (
                               <Image
                                 alt={image?.alt || product?.title || ''}
                                 className="h-full w-full object-cover"

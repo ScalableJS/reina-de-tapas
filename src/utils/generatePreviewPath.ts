@@ -5,9 +5,10 @@ const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   pages: '',
 }
 
-
-
-export const generatePreviewPath = ({ collection, slug }: {
+export const generatePreviewPath = ({
+  collection,
+  slug,
+}: {
   collection: keyof typeof collectionPrefixMap
   slug: string
 }) => {

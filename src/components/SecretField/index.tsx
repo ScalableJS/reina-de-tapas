@@ -2,11 +2,9 @@
 import { useState } from 'react'
 import { useField } from '@payloadcms/ui'
 
-
 export default function SecretField({ path, field: { label, required } }) {
   const { value, setValue } = useField<string>({ path })
   const [visible, setVisible] = useState(false)
-
 
   return (
     <div className="relative flex field-type text">

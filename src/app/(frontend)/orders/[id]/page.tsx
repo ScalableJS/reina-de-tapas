@@ -29,16 +29,13 @@ export default async function Order({ params, searchParams }: PageProps) {
   let order: Order | null = null
 
   try {
-    order = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}?depth=2`,
-      {
-        headers: {
-          ...(token ? { Authorization: `JWT ${token}` } : {}),
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store',          // гарантируем актуальные данные
+    order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/${id}?depth=2`, {
+      headers: {
+        ...(token ? { Authorization: `JWT ${token}` } : {}),
+        'Content-Type': 'application/json',
       },
-    ).then(async (res) => {
+      cache: 'no-store', // гарантируем актуальные данные
+    }).then(async (res) => {
       if (!res.ok) notFound()
       const json = await res.json()
       if (json?.error || json?.errors) notFound()

@@ -40,7 +40,7 @@ export const Pages: CollectionConfig = {
     preview: ({ slug }) => {
       return generatePreviewPath({
         slug: typeof slug === 'string' ? slug : '',
-        collection: 'pages'
+        collection: 'pages',
       })
     },
     useAsTitle: 'title',

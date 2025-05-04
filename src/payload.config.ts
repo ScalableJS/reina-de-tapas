@@ -1,4 +1,3 @@
-
 import {
   BoldFeature,
   ItalicFeature,
@@ -26,7 +25,6 @@ import { createGuestOrder } from '@/endpoints/create-order'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
 
 export default buildConfig({
   admin: {

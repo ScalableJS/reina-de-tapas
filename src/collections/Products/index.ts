@@ -46,7 +46,7 @@ export const Products: CollectionConfig = {
     preview: ({ slug }) => {
       return generatePreviewPath({
         slug: typeof slug === 'string' ? slug : '',
-        collection: 'products'
+        collection: 'products',
       })
     },
     useAsTitle: 'title',

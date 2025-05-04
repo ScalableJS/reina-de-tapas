@@ -16,7 +16,7 @@ export function CheckoutPage() {
   const [locked, setLocked] = useState(false)
 
   const { cart, cartIsEmpty, cartTotal, clearCart } = useCart()
-  const router = useRouter();
+  const router = useRouter()
 
   const allFilled = name && email && phone
 
@@ -26,23 +26,29 @@ export function CheckoutPage() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/order-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, ...cart, total: cartTotal.amount, currency: 'EUR' }),
-      });
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          ...cart,
+          total: cartTotal.amount,
+          currency: 'EUR',
+        }),
+      })
 
       if (!response.ok) {
-        throw new Error('Failed to create order');
+        throw new Error('Failed to create order')
       }
 
-      const { orderId } = await response.json();
+      const { orderId } = await response.json()
 
-      clearCart();
+      clearCart()
       router.push(`/orders/${orderId}`)
     } catch (err) {
-      console.error(err);
+      console.error(err)
     } finally {
-      setLocked(false);
+      setLocked(false)
     }
-
   }
 
   return (

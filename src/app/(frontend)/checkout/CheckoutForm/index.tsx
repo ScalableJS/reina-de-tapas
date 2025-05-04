@@ -24,22 +24,18 @@ export const CheckoutForm: React.FC = () => {
     async (event: { preventDefault: () => void }) => {
       event.preventDefault()
       setIsLoading(true)
-        try {
-
-
-          // const redirect = `/orders/${data.docs?.[0]?.id}?paymentId=${paymentIntent.id}`
-          // clearCart()
-          // router.push(redirect)
-         // ${process.env.NEXT_PUBLIC_SERVER_URL}/order-confirmation
-          // clearCart
-        } catch (err) {
-          const msg = err instanceof Error ? err.message : 'Something went wrong.'
-          setError(`Error while submitting payment: ${msg}`)
-
-        } finally {
-          setIsLoading(false)
-        }
-
+      try {
+        // const redirect = `/orders/${data.docs?.[0]?.id}?paymentId=${paymentIntent.id}`
+        // clearCart()
+        // router.push(redirect)
+        // ${process.env.NEXT_PUBLIC_SERVER_URL}/order-confirmation
+        // clearCart
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Something went wrong.'
+        setError(`Error while submitting payment: ${msg}`)
+      } finally {
+        setIsLoading(false)
+      }
     },
     [clearCart, router],
   )

@@ -4,7 +4,6 @@ import { cn } from '@/utils/cn'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
-
 export function CMSLink({
   type,
   appearance = 'inline',
@@ -21,13 +20,15 @@ export function CMSLink({
   className?: string
   label?: string | null
   newTab?: boolean | null
-  reference?: {
-    relationTo: 'pages'
-    value: Page | number
-  } | {
-    relationTo: 'categories'
-    value: Category | number
-  },
+  reference?:
+    | {
+        relationTo: 'pages'
+        value: Page | number
+      }
+    | {
+        relationTo: 'categories'
+        value: Category | number
+      }
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
   url?: string | null

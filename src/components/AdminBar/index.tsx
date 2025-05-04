@@ -6,7 +6,6 @@ import { cn } from '@/utils/cn'
 import { PayloadAdminBar } from '@payloadcms/admin-bar'
 import React, { useState } from 'react'
 
-
 const Title: React.FC = () => <span>Dashboard</span>
 
 export const AdminBar: React.FC<{
@@ -14,7 +13,6 @@ export const AdminBar: React.FC<{
 }> = (props) => {
   const { adminBarProps } = props || {}
   const [show, setShow] = useState(false)
-
 
   const onAuthChange = React.useCallback((user) => {
     setShow(user?.id)

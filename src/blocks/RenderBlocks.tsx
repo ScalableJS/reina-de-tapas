@@ -29,27 +29,24 @@ export const RenderBlocks: React.FC<{
 
   if (!hasBlocks) return null
 
-    return (
-      <>
-        {blocks.map((block, index) => {
-          const { blockName, blockType } = block
+  return (
+    <>
+      {blocks.map((block, index) => {
+        const { blockName, blockType } = block
 
-          if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
+        if (blockType && blockType in blockComponents) {
+          const Block = blockComponents[blockType]
 
-            if (Block) {
-              return (
-                <div className="my-16" key={index}>
-                  <Block id={toKebabCase(blockName!)} {...block} />
-                </div>
-              )
-            }
+          if (Block) {
+            return (
+              <div className="my-16" key={index}>
+                <Block id={toKebabCase(blockName!)} {...block} />
+              </div>
+            )
           }
-          return null
-        })}
-      </>
-    )
-
-
-
+        }
+        return null
+      })}
+    </>
+  )
 }

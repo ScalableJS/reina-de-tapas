@@ -34,7 +34,6 @@ export default async function SearchCategoryPage({
     })
   ).docs?.[0]
 
-
   const products = await payload.find({
     collection: 'products',
     ...(sort ? { sort } : { sort: 'title' }),
@@ -43,21 +42,21 @@ export default async function SearchCategoryPage({
         ...(categoryDoc ? [{ categories: { contains: categoryDoc.id } }] : []),
         ...(typeof searchValue === 'string' && searchValue.trim()
           ? [
-            {
-              or: [
-                {
-                  title: {
-                    like: searchValue,
+              {
+                or: [
+                  {
+                    title: {
+                      like: searchValue,
+                    },
                   },
-                },
-                {
-                  description: {
-                    like: searchValue,
+                  {
+                    description: {
+                      like: searchValue,
+                    },
                   },
-                },
-              ],
-            },
-          ]
+                ],
+              },
+            ]
           : []),
       ],
     },

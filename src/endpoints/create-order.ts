@@ -35,8 +35,7 @@ export const createGuestOrder: PayloadHandler = async (req) => {
       product: typeof product === 'string' ? Number(product) : product,
       quantity,
       variant,
-    }));
-
+    }))
 
     const order = await payload.create({
       collection: 'orders',
@@ -44,12 +43,11 @@ export const createGuestOrder: PayloadHandler = async (req) => {
         orderedBy: userId,
         items: orderItems,
         total,
-        currency: currency ?? "EUR",
-        status: "processing"
+        currency: currency ?? 'EUR',
+        status: 'processing',
       },
       req,
     })
-
 
     return Response.json({ success: true, orderId: order.id }, { status: 200 })
   } catch (error) {

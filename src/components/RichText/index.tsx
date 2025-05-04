@@ -41,12 +41,13 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
   },
 })
 
-
-export default function RichText(props: {
-  data: SerializedEditorState
-  enableGutter?: boolean
-  enableProse?: boolean
-} & HTMLAttributes<HTMLDivElement>) {
+export default function RichText(
+  props: {
+    data: SerializedEditorState
+    enableGutter?: boolean
+    enableProse?: boolean
+  } & HTMLAttributes<HTMLDivElement>,
+) {
   const { className, enableProse = true, enableGutter = true, ...rest } = props
   return (
     <RichTextWithoutBlocks

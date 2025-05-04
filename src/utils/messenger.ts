@@ -1,5 +1,3 @@
-
-
 interface EmailConfig {
   from: string
   to: string
@@ -16,7 +14,7 @@ export const sendEmail = async ({ order, config }: { order: any; config: EmailCo
 type TelegramConfig = { botToken: string; chatId: string }
 
 export const sendTelegram = async ({ order, config }: { order: any; config: TelegramConfig }) => {
-  const { name, phone, email } = order.orderedBy;
+  const { name, phone, email } = order.orderedBy
   const body = [
     `🛍️ <b>New Order #${order.id}</b>`,
     '',
@@ -48,6 +46,5 @@ export const sendTelegram = async ({ order, config }: { order: any; config: Tele
 
 const esc = (s: string) => {
   console.log(1, s)
-  return  s?.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!)
+  return s?.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]!)
 }
-

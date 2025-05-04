@@ -35,10 +35,7 @@ export async function GET(
   }
 
   if (!path.startsWith('/')) {
-    return new Response(
-      'This endpoint can only be used for relative previews',
-      { status: 500 },
-    )
+    return new Response('This endpoint can only be used for relative previews', { status: 500 })
   }
 
   let user
@@ -49,10 +46,7 @@ export async function GET(
       headers: req.headers,
     })
   } catch (error) {
-    payload.logger.error(
-      { err: error },
-      'Error verifying token for live preview',
-    )
+    payload.logger.error({ err: error }, 'Error verifying token for live preview')
     return new Response('You are not allowed to preview this page', {
       status: 403,
     })

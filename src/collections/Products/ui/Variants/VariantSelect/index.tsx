@@ -2,12 +2,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import type { Column, TextFieldClientProps } from 'payload'
 
-import {
-  Table,
-  useForm,
-  useTranslation,
-  useWatchForm,
-} from '@payloadcms/ui'
+import { Table, useForm, useTranslation, useWatchForm } from '@payloadcms/ui'
 
 import { baseClass } from './shared'
 

@@ -34,10 +34,7 @@ export function ProductDescription({ product }: { product: Product }) {
         <h1 className="text-2xl font-medium">{product.title}</h1>
         <div className="uppercase font-mono">
           {hasVariants ? (
-            <Price
-              highestAmount={highestAmount}
-              lowestAmount={lowestAmount}
-            />
+            <Price highestAmount={highestAmount} lowestAmount={lowestAmount} />
           ) : (
             <Price amount={amount} />
           )}

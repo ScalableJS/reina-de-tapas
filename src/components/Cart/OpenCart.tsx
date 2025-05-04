@@ -12,12 +12,7 @@ export function OpenCartButton({
   quantity?: number
 }) {
   return (
-    <Button
-      variant="nav"
-      size="clear"
-      className="navLink relative hover:cursor-pointer"
-      {...rest}
-    >
+    <Button variant="nav" size="clear" className="navLink relative hover:cursor-pointer" {...rest}>
       <span>Cart</span>
 
       {quantity && (
