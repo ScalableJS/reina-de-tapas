@@ -16,7 +16,7 @@
   ]
   ```
  */
-export const currency = { code: 'USD', symbol: '$', name: 'US Dollar', decimalPlaces: 2 }
+export const currency = { code: 'EUR', symbol: '€', name: 'Euro', decimalPlaces: 2 }
 
 // Convert display value with decimal point to base value (e.g., $25.00 to 2500)
 export const convertToBaseValue = (displayValue: string): number => {

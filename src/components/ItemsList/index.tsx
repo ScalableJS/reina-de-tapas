@@ -73,7 +73,6 @@ export function ItemsList({ items }: { items: CartItems }) {
                   <Price
                     amount={info.price?.amount}
                     className="flex justify-end space-y-2 text-right text-sm"
-                    currencyCode={info.price?.currency}
                   />
                 )}
                 <p>{item.quantity}</p>

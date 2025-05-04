@@ -7,6 +7,7 @@ import { useCart } from '@/providers/Cart'
 import Link from 'next/link'
 import { useState } from 'react'
 import { InputField } from './InputField'
+import { useRouter } from 'next/navigation'
 
 export function CheckoutPage() {
   const [name, setName] = useState('')
@@ -14,33 +15,34 @@ export function CheckoutPage() {
   const [phone, setPhone] = useState('')
   const [locked, setLocked] = useState(false)
 
-  const { cart, cartIsEmpty, cartTotal } = useCart()
+  const { cart, cartIsEmpty, cartTotal, clearCart } = useCart()
+  const router = useRouter();
 
   const allFilled = name && email && phone
 
   const handleCheckout = async () => {
-    setLocked(true)
-     await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/order-checkout`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, phone, ...cart, total: cartTotal.amount, currency: 'EUR' }),
-    })
+    try {
+      setLocked(true)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/order-checkout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, ...cart, total: cartTotal.amount, currency: 'EUR' }),
+      });
 
-    // startTransition(async () => {
-    //   const res = await fetch('/api/checkout', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ ...contact, cart }),
-    //   })
-    //   if (!res.ok) {
-    //     setError('Could not place order. Try again.')
-    //     setLocked(false)
-    //     return
-    //   }
-    //   const { id } = await res.json()
-    //   clearCart()
-    //   router.push(`/orders/${id}`)
-    // })
+      if (!response.ok) {
+        throw new Error('Failed to create order');
+      }
+
+      const { orderId } = await response.json();
+
+      clearCart();
+      router.push(`/orders/${orderId}`)
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLocked(false);
+    }
+
   }
 
   return (
@@ -140,7 +142,7 @@ export function CheckoutPage() {
                     </div>
                   </div>
 
-                  {product.price && <Price amount={product.price} currencyCode="usd" />}
+                  {product.price && <Price amount={product.price} />}
                 </div>
               </div>
             )
@@ -150,7 +152,7 @@ export function CheckoutPage() {
 
           <div className="flex items-center justify-between gap-2">
             <span className="uppercase">Total</span>
-            <Price className="text-3xl font-medium" amount={cartTotal.amount} currencyCode="usd" />
+            <Price className="text-3xl font-medium" amount={cartTotal.amount} />
           </div>
         </div>
       )}

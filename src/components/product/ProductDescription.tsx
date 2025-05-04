@@ -35,12 +35,11 @@ export function ProductDescription({ product }: { product: Product }) {
         <div className="uppercase font-mono">
           {hasVariants ? (
             <Price
-              currencyCode={currency}
               highestAmount={highestAmount}
               lowestAmount={lowestAmount}
             />
           ) : (
-            <Price amount={amount} currencyCode={currency} />
+            <Price amount={amount} />
           )}
         </div>
       </div>

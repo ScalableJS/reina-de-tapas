@@ -56,7 +56,6 @@ export const ProductItem: React.FC<Props> = ({
             <Price
               className="font-mono text-primary/50 text-sm"
               amount={product.price * quantity}
-              currencyCode="usd"
             />
           </div>
         )}

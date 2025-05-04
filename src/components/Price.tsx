@@ -3,7 +3,6 @@ import React from 'react'
 
 type BaseProps = {
   className?: string
-  currencyCode: string
   currencyCodeClassName?: string
 }
 
@@ -24,7 +23,6 @@ type Props = BaseProps & (PriceFixed | PriceRange)
 export const Price = ({
   amount,
   className,
-  currencyCode = 'usd',
   highestAmount,
   lowestAmount,
 }: Props & React.ComponentProps<'p'>) => {

@@ -47,7 +47,6 @@ export function GridTileImage({
       {label ? (
         <Label
           amount={label.amount}
-          currencyCode={label.currencyCode}
           position={label.position}
           title={label.title}
         />
