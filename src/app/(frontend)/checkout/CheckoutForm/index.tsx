@@ -5,8 +5,6 @@ import type { Order } from '@/payload-types'
 import { Message } from '@/components/Message'
 import { Button } from '@/components/ui/button'
 import { useCart } from '@/providers/Cart'
-import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 
